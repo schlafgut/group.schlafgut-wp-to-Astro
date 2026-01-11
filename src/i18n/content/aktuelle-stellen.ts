@@ -60,27 +60,27 @@ export const aktuelleStellenContent: Record<'de' | 'en', AktuelleStellenContent>
     jobs: [
       {
         href: '/aktuelle-stellen/marketplace-manager/',
-        title: 'Marketplace Manager<br />(m/w/d)',
+        title: 'Marketplace<br />Manager (m/w/d)',
         when: 'sofort',
       },
       {
         href: '/aktuelle-stellen/paid-social-marketer/',
-        title: 'Paid Social Marketer<br />(m/w/d)',
+        title: 'Paid Social<br />Marketer (m/w/d)',
         when: 'sofort',
       },
       {
         href: '/aktuelle-stellen/erp-manager/',
-        title: 'ERP Manager (m/w/d)',
+        title: 'ERP Manager<br />(m/w/d)',
         when: 'sofort',
       },
       {
         href: '/aktuelle-stellen/ecommerce-manager/',
-        title: 'eCommerce Manager (m/w/d)',
+        title: 'eCommerce<br />Manager (m/w/d)',
         when: 'sofort',
       },
       {
         href: '/aktuelle-stellen/werkstudenten-it/',
-        title: 'Werkstudenten IT (m/w/d)',
+        title: 'Werkstudent IT<br />(m/w/d)',
         when: 'sofort',
       },
     ],
