@@ -11,7 +11,8 @@
 |-------|------|--------|------|
 | 1 | Foundation Setup | **completed** | 01-PLAN.md ✅ |
 | 2 | Component Library | **completed** | 01-PLAN.md ✅, 02-PLAN.md ✅ |
-| 3 | Page Migration | **in progress** | 01-PLAN.md ✅, 02-PLAN.md ✅, 03-PLAN.md, 04-PLAN.md |
+| 3 | Page Migration (DE only) | **in progress** | 01-PLAN.md ✅, 02-PLAN.md ✅, 03-PLAN.md (DE only), 04-PLAN.md |
+| 3.1 | Keystatic CMS Jobs | **planned** | 03.1-01-PLAN.md, 03.1-02-PLAN.md |
 | 4 | Optimization | pending | - |
 | 5 | Polish & Launch | pending | - |
 
@@ -65,6 +66,10 @@
 
 ## Blockers
 None
+
+## Roadmap Evolution
+- **2026-01-11**: Phase 3.1 inserted after Phase 3: Keystatic CMS Integration für Job-Verwaltung (URGENT)
+- **2026-01-11**: Scope Change - EN/NL Migration gestoppt, nur noch DE. Language-Switcher deaktivieren.
 
 ## Notes
 - Phase 4 flagged for research (jQuery analysis)

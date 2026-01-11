@@ -35,17 +35,34 @@
 ---
 
 ### Phase 3: Page Migration
-**Goal**: All content pages migrated with full i18n support
+**Goal**: All content pages migrated (DE only - EN/NL Migration gestoppt)
 
 **Scope**:
-- Homepage (3 languages)
+- Homepage (DE only)
 - Content pages: Was uns ausmacht, Historie, Produktion, Produkte, Bei uns arbeiten
 - Interview page
-- Job listings overview + 5 individual job pages
-- Jobs as Markdown Content Collections
+- Job listings overview + individual job pages
 - URL structure preserved (SEO requirement)
+- Language switcher deaktiviert
 
 **Research**: No - 1:1 content migration
+
+**Scope Change (2026-01-11)**: EN/NL Migration gestoppt, Fokus nur DE
+
+---
+
+### Phase 3.1: Keystatic CMS Integration für Job-Verwaltung (INSERTED)
+**Goal**: Headless CMS für Job-Verwaltung mit Keystatic
+
+**Scope**:
+- Keystatic CMS Setup und Konfiguration
+- Job Content Collection mit Keystatic verwalten
+- Admin UI für Job-Erstellung/Bearbeitung
+- Git-basierter Content Workflow
+
+**Depends on**: Phase 3 (Jobs-Seiten müssen existieren)
+
+**Research**: Yes - Keystatic + Astro Integration prüfen
 
 ---
 
