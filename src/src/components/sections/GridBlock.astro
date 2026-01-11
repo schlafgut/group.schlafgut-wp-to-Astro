@@ -1,0 +1,240 @@
+---
+import Image from '../Image.astro';
+
+interface Props {
+  variant?: 'default' | 'wide';
+  headline?: 'agrandir_wide' | 'plantin';
+  position?: 'top' | 'middle';
+  color?: 'black' | 'white' | 'yellow';
+  kicker?: string;
+  title?: string;
+  link?: {
+    href: string;
+    label: string;
+    target?: '_blank' | '_self';
+  };
+  image?: {
+    src: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    srcset?: string;
+  };
+  video?: {
+    src: string;
+    width?: number;
+    height?: number;
+  };
+}
+
+const {
+  variant = 'default',
+  headline = 'agrandir_wide',
+  position = 'top',
+  color = 'black',
+  kicker,
+  title,
+  link,
+  image,
+  video,
+} = Astro.props;
+---
+
+<div
+  class:list={['single__block', variant]}
+  data-headline={headline}
+  data-position={position}
+  data-color={color}
+>
+  <div class="content">
+    {kicker && <h4 set:html={kicker} />}
+    {title && <h3 set:html={title} />}
+  </div>
+
+  {link && (
+    <a href={link.href} target={link.target || '_self'} class="cta__link">
+      {link.label}
+    </a>
+  )}
+
+  {video ? (
+    <video class="background_image lazy" width={video.width} height={video.height} autoplay loop muted playsinline>
+      <source data-src={video.src} type="video/mp4" />
+    </video>
+  ) : image ? (
+    <Image
+      src={image.src}
+      alt={image.alt || ''}
+      width={image.width}
+      height={image.height}
+      srcset={image.srcset}
+      class="background_image"
+    />
+  ) : null}
+</div>
+
+<style>
+  .single__block {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--borderRadius);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2.5rem;
+    min-height: 44rem;
+  }
+
+  .single__block.wide {
+    grid-column: span 2;
+    min-height: 38rem;
+  }
+
+  @media (max-width: 768px) {
+    .single__block {
+      min-height: 30rem;
+      padding: 1.5rem;
+    }
+
+    .single__block.wide {
+      grid-column: span 1;
+      min-height: 25rem;
+    }
+  }
+
+  /* Position variants */
+  .single__block[data-position="top"] {
+    justify-content: flex-start;
+  }
+
+  .single__block[data-position="middle"] {
+    justify-content: center;
+  }
+
+  /* Color variants */
+  .single__block[data-color="black"] {
+    --text-color: var(--colorBlack);
+  }
+
+  .single__block[data-color="white"] {
+    --text-color: var(--colorWhite);
+  }
+
+  .single__block[data-color="yellow"] {
+    --text-color: var(--colorYellow);
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--text-color);
+  }
+
+  .content h4 {
+    font-size: var(--fontSize12);
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-weight: 500;
+    margin: 0 0 1em;
+  }
+
+  .content h3 {
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  /* Headline font variants */
+  .single__block[data-headline="agrandir_wide"] h3 {
+    font-family: "AgrandirWide", sans-serif;
+    font-weight: 900;
+    font-size: var(--fontSize30);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .single__block[data-headline="plantin"] h3 {
+    font-family: "PlantinMTPro", serif;
+    font-weight: 300;
+    font-size: var(--fontSize44);
+  }
+
+  @media (max-width: 768px) {
+    .single__block[data-headline="agrandir_wide"] h3 {
+      font-size: var(--fontSize20);
+    }
+
+    .single__block[data-headline="plantin"] h3 {
+      font-size: var(--fontSize24);
+    }
+  }
+
+  .cta__link {
+    position: relative;
+    z-index: 2;
+    margin-top: 1.5em;
+    font-size: var(--fontSize12);
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .cta__link::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -0.2em;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transition: width 200ms ease-out;
+  }
+
+  .cta__link:hover::after {
+    width: 0;
+  }
+
+  .background_image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  video.background_image {
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  // Lazy load videos
+  const lazyVideos = document.querySelectorAll('video.lazy');
+
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const video = entry.target as HTMLVideoElement;
+          const source = video.querySelector('source[data-src]') as HTMLSourceElement;
+
+          if (source && source.dataset.src) {
+            source.src = source.dataset.src;
+            video.load();
+            video.classList.remove('lazy');
+          }
+
+          videoObserver.unobserve(video);
+        }
+      });
+    });
+
+    lazyVideos.forEach((video) => videoObserver.observe(video));
+  }
+</script>
