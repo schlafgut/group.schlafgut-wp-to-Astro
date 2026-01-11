@@ -1,10 +1,23 @@
 ---
+/**
+ * Image component with Astro's native image optimization
+ *
+ * Features:
+ * - Automatic WebP conversion
+ * - Responsive image generation (srcset)
+ * - Native lazy loading (loading="lazy")
+ * - CLS prevention via width/height attributes
+ *
+ * Target: Lighthouse Performance 95+
+ */
+import { Image as AstroImage } from 'astro:assets';
+
 interface Props {
   src: string;
   alt?: string;
   width?: number;
   height?: number;
-  srcset?: string;
+  srcset?: string; // Legacy prop, ignored with optimization
   sizes?: string;
   class?: string;
   loading?: 'lazy' | 'eager';
@@ -15,84 +28,65 @@ const {
   alt = '',
   width,
   height,
-  srcset,
-  sizes = 'auto',
   class: className = '',
   loading = 'lazy',
+  sizes = '(max-width: 768px) 100vw, 50vw',
 } = Astro.props;
 
-// Create placeholder SVG for lazy loading
-const placeholderSvg = width && height
-  ? `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${height}'%3E%3C/svg%3E`
-  : undefined;
+// Extract filename from wp-content path
+const getFilename = (path: string): string => path.split('/').pop() || '';
 
-const isLazy = loading === 'lazy';
+// Import all images from assets folder at build time (lazy loaded)
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/*.{jpg,jpeg,png,gif,webp}'
+);
+
+// Get the image module for this src
+const filename = getFilename(src);
+const imagePath = `/src/assets/images/${filename}`;
+const imageLoader = allImages[imagePath];
+
+// Load the image if found in assets
+let imageData: ImageMetadata | null = null;
+if (imageLoader) {
+  const module = await imageLoader();
+  imageData = module.default;
+}
+
+// Determine final dimensions
+const finalWidth = width || imageData?.width;
+const finalHeight = height || imageData?.height;
 ---
 
-<img
-  class:list={['lazyload', className]}
-  width={width}
-  height={height}
-  src={isLazy && placeholderSvg ? placeholderSvg : src}
-  data-src={isLazy ? src : undefined}
-  data-srcset={isLazy && srcset ? srcset : undefined}
-  srcset={!isLazy && srcset ? srcset : undefined}
-  data-sizes={isLazy ? sizes : undefined}
-  sizes={!isLazy ? sizes : undefined}
-  alt={alt}
-  loading={loading}
-/>
+{imageData ? (
+  <AstroImage
+    src={imageData}
+    alt={alt}
+    width={finalWidth}
+    height={finalHeight}
+    class={className}
+    loading={loading}
+    decoding={loading === 'lazy' ? 'async' : 'sync'}
+    format="webp"
+    quality={80}
+    densities={[1, 2]}
+  />
+) : (
+  <img
+    src={src}
+    alt={alt}
+    width={finalWidth}
+    height={finalHeight}
+    class={className}
+    loading={loading}
+    decoding={loading === 'lazy' ? 'async' : 'sync'}
+    fetchpriority={loading === 'eager' ? 'high' : undefined}
+  />
+)}
 
 <style>
   img {
     max-width: 100%;
     height: auto;
   }
-
-  img.lazyload {
-    opacity: 0;
-    transition: opacity 300ms ease-out;
-  }
-
-  img.lazyloaded {
-    opacity: 1;
-  }
 </style>
-
-<script>
-  // Simple lazy loading implementation
-  const lazyImages = document.querySelectorAll('img.lazyload[data-src]');
-
-  const loadImage = (img: HTMLImageElement) => {
-    const src = img.dataset.src;
-    const srcset = img.dataset.srcset;
-
-    if (src) {
-      img.src = src;
-    }
-    if (srcset) {
-      img.srcset = srcset;
-    }
-
-    img.classList.remove('lazyload');
-    img.classList.add('lazyloaded');
-  };
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          loadImage(entry.target as HTMLImageElement);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      rootMargin: '50px 0px',
-    });
-
-    lazyImages.forEach((img) => observer.observe(img));
-  } else {
-    // Fallback for browsers without IntersectionObserver
-    lazyImages.forEach((img) => loadImage(img as HTMLImageElement));
-  }
-</script>

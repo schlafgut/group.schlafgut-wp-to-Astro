@@ -10,9 +10,11 @@ interface Props {
     height?: number;
     srcset?: string;
   };
+  /** First hero on page should use eager loading for LCP optimization */
+  isFirstHero?: boolean;
 }
 
-const { title, image } = Astro.props;
+const { title, image, isFirstHero = true } = Astro.props;
 ---
 
 <section class="section__hero default">
@@ -25,7 +27,7 @@ const { title, image } = Astro.props;
       alt={image.alt || ''}
       width={image.width}
       height={image.height}
-      srcset={image.srcset}
+      loading={isFirstHero ? 'eager' : 'lazy'}
     />
   </div>
 </section>
