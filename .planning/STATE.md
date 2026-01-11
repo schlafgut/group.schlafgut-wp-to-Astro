@@ -74,6 +74,14 @@
   - Alte statische Job-Seiten entfernt (ersetzt durch dynamische Route)
   - **Phase 3.1 COMPLETE** - Keystatic CMS für Jobs vollständig integriert
 
+### 2026-01-12
+- **CMS Schema Refactoring** (`1023bc2`):
+  - Keystatic von document fields auf multiline text umgestellt
+  - ColumnsWithHeadline Komponente für korrektes CSS (beige/gelb Hintergründe)
+  - Alle Schema-Felder haben defaults (keine blockierenden required fields)
+  - 5 Job-Dateien auf einfaches YAML multiline Format migriert
+  - Keystatic Admin UI zeigt Inhalte korrekt in Textareas an
+
 ---
 
 ## Blockers
@@ -97,4 +105,4 @@ None
 - **Phase 3.1 abgeschlossen** - 5 Jobs migriert, dynamische Seiten, CMS-Integration komplett
 
 ---
-*Last updated: 2026-01-11*
+*Last updated: 2026-01-12*
