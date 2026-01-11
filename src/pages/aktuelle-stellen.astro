@@ -1,8 +1,9 @@
 ---
 /**
  * Aktuelle Stellen (German)
- * Jobs listing page
+ * Jobs listing page - now using Content Collection
  */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroText from '../components/sections/HeroText.astro';
 import JobListing from '../components/sections/JobListing.astro';
@@ -13,6 +14,16 @@ import FullBleedBlock from '../components/sections/FullBleedBlock.astro';
 import { aktuelleStellenContent } from '../i18n/content/aktuelle-stellen';
 
 const content = aktuelleStellenContent.de;
+
+// Fetch published jobs from Content Collection
+const jobEntries = await getCollection('jobs', ({ data }) => data.published);
+
+// Transform to JobListing format
+const jobs = jobEntries.map((job) => ({
+  href: `/aktuelle-stellen/${job.slug}/`,
+  title: `${job.data.title}<br />(${job.data.gender})`,
+  when: 'sofort',
+}));
 ---
 
 <BaseLayout
@@ -23,7 +34,7 @@ const content = aktuelleStellenContent.de;
     <h1 set:html={content.heroText.title} />
   </HeroText>
 
-  <JobListing jobs={content.jobs} />
+  <JobListing jobs={jobs} />
 
   <GridBlocks variant="fullwidth">
     <GridBlock
