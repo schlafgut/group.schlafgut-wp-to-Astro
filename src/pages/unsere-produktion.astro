@@ -1,0 +1,114 @@
+---
+/**
+ * Unsere Produktion (German)
+ * Section order: HeroText > FullwidthImage > ColumnsWithHeadline > [FullwidthImage + ColumnsWithHeadline] x2 > SectionTicker > TextImage > SectionTicker > FullwidthImage x2 > Spacer > GridBlocks > Spacer > FullBleedBlocks
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroText from '../components/sections/HeroText.astro';
+import FullwidthImage from '../components/sections/FullwidthImage.astro';
+import ColumnsWithHeadline from '../components/sections/ColumnsWithHeadline.astro';
+import SectionTicker from '../components/sections/SectionTicker.astro';
+import TextImage from '../components/sections/TextImage.astro';
+import Spacer from '../components/sections/Spacer.astro';
+import GridBlocks from '../components/sections/GridBlocks.astro';
+import GridBlock from '../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../components/sections/FullBleedBlock.astro';
+import { unsereProduktionContent } from '../i18n/content/unsere-produktion';
+
+const content = unsereProduktionContent.de;
+---
+
+<BaseLayout
+  title={content.meta.title}
+  description={content.meta.description}
+>
+  <HeroText>
+    <h1 set:html={content.heroText.title} />
+    <p>{content.heroText.paragraph}</p>
+  </HeroText>
+
+  <FullwidthImage video={content.fullwidthImages[0].video} />
+
+  {content.columnsWithHeadline[0] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[0].background}
+      lines={content.columnsWithHeadline[0].lines}
+    />
+  )}
+
+  <FullwidthImage video={content.fullwidthImages[1].video} />
+
+  {content.columnsWithHeadline[1] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[1].background}
+      lines={content.columnsWithHeadline[1].lines}
+    />
+  )}
+
+  <FullwidthImage video={content.fullwidthImages[2].video} />
+
+  {content.columnsWithHeadline[2] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[2].background}
+      lines={content.columnsWithHeadline[2].lines}
+    />
+  )}
+
+  <SectionTicker text={content.ticker} />
+
+  <TextImage
+    reversed={content.textImage.reversed}
+    fullBleed={content.textImage.fullBleed}
+    noMargin={content.textImage.noMargin}
+    background={content.textImage.background}
+    content={content.textImage.content}
+    video={content.textImage.video}
+  />
+
+  <SectionTicker text={content.ticker} />
+
+  <FullwidthImage
+    background={content.fullwidthImages[3].background}
+    noMargin={content.fullwidthImages[3].noMargin}
+    video={content.fullwidthImages[3].video}
+    description={content.fullwidthImages[3].description}
+  />
+
+  <FullwidthImage
+    background={content.fullwidthImages[4].background}
+    noMargin={content.fullwidthImages[4].noMargin}
+    video={content.fullwidthImages[4].video}
+    description={content.fullwidthImages[4].description}
+  />
+
+  <Spacer size="large" />
+  <Spacer size="large" />
+
+  <GridBlocks variant={content.gridBlocks.variant}>
+    {content.gridBlocks.blocks.map((block) => (
+      <GridBlock
+        variant={block.variant}
+        headline={block.headline}
+        position={block.position}
+        color={block.color}
+        kicker={block.kicker}
+        title={block.title}
+        link={block.link}
+        image={block.image}
+      />
+    ))}
+  </GridBlocks>
+
+  <Spacer size="xlarge" />
+
+  <FullBleedBlocks>
+    {content.fullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        title={block.title}
+        image={block.image}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>

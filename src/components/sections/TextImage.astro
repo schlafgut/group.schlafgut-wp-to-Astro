@@ -7,12 +7,17 @@ interface Props {
   noMargin?: boolean;
   background?: 'default' | 'yellow' | 'beige';
   content: string;
-  image: {
+  image?: {
     src: string;
     alt?: string;
     width?: number;
     height?: number;
     srcset?: string;
+  };
+  video?: {
+    src: string;
+    width?: number;
+    height?: number;
   };
   class?: string;
 }
@@ -24,6 +29,7 @@ const {
   background = 'default',
   content,
   image,
+  video,
   class: className = '',
 } = Astro.props;
 
@@ -45,13 +51,27 @@ const classes = [
       <Fragment set:html={content} />
     </div>
     <div class="image">
-      <Image
-        src={image.src}
-        alt={image.alt || ''}
-        width={image.width}
-        height={image.height}
-        srcset={image.srcset}
-      />
+      {video ? (
+        <video
+          class="lazy"
+          width={video.width || 1080}
+          height={video.height || 1080}
+          autoplay
+          loop
+          muted
+          playsinline
+        >
+          <source data-src={video.src} type="video/mp4" />
+        </video>
+      ) : image ? (
+        <Image
+          src={image.src}
+          alt={image.alt || ''}
+          width={image.width}
+          height={image.height}
+          srcset={image.srcset}
+        />
+      ) : null}
     </div>
   </div>
 </section>
