@@ -18,7 +18,11 @@ interface Props {
     desktop?: { src: string; width?: number; height?: number };
     mobile?: { src: string; width?: number; height?: number };
   };
-  description?: string;
+  description?: string | {
+    variant?: 'default' | 'alternative';
+    title?: string;
+    content: string;
+  };
   class?: string;
 }
 
@@ -102,9 +106,18 @@ const {
       ) : null}
     </div>
     {description && (
-      <div class="description">
-        <p set:html={description} />
-      </div>
+      typeof description === 'string' ? (
+        <div class="description">
+          <p set:html={description} />
+        </div>
+      ) : (
+        <div class="innerwrapper smaller">
+          <div class:list={['description', description.variant || 'default']}>
+            {description.title && <h4>{description.title}</h4>}
+            <Fragment set:html={description.content} />
+          </div>
+        </div>
+      )
     )}
   </div>
 </section>
@@ -157,6 +170,46 @@ const {
 
   .section__fullwidth-image .image .description p {
     max-width: 47em;
+    margin: 0;
+  }
+
+  .section__fullwidth-image .image .description.alternative {
+    font-size: var(--fontSize24);
+    font-family: "PlantinMTPro", serif;
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    padding: 3.2rem 0 0 0;
+    max-width: 36em;
+  }
+
+  @media (max-width: 768px) {
+    .section__fullwidth-image .image .description.alternative {
+      font-size: var(--fontSize17);
+      line-height: 1.44;
+      padding-top: 1.7rem;
+    }
+  }
+
+  .section__fullwidth-image .image .description.alternative h4 {
+    font-family: "AgrandirWide", sans-serif;
+    font-size: var(--fontSize18);
+    font-weight: 900;
+    line-height: 1.333;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.8rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .section__fullwidth-image .image .description.alternative h4 {
+      font-size: var(--fontSize14);
+    }
+  }
+
+  .section__fullwidth-image .image .description.alternative :global(p) {
+    max-width: none;
     margin: 0;
   }
 </style>

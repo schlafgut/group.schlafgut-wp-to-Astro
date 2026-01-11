@@ -1,0 +1,63 @@
+---
+/**
+ * Interview (German)
+ * Section order: HeroText > FullwidthImage > [InterviewColumns | InterviewQuote]... > GridBlocks > FullBleedBlocks
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroText from '../components/sections/HeroText.astro';
+import FullwidthImage from '../components/sections/FullwidthImage.astro';
+import InterviewColumns from '../components/sections/InterviewColumns.astro';
+import InterviewQuote from '../components/sections/InterviewQuote.astro';
+import GridBlocks from '../components/sections/GridBlocks.astro';
+import GridBlock from '../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../components/sections/FullBleedBlock.astro';
+import { interviewContent } from '../i18n/content/interview';
+
+const content = interviewContent.de;
+---
+
+<BaseLayout
+  title={content.meta.title}
+  description={content.meta.description}
+>
+  <HeroText>
+    <h1 set:html={content.heroText.title} />
+    <p set:html={content.heroText.paragraph} />
+  </HeroText>
+
+  <FullwidthImage
+    image={content.heroImage.image}
+    description={content.heroImage.description}
+  />
+
+  {content.interviewSections.map((section) => (
+    section.type === 'columns' ? (
+      <InterviewColumns lines={section.lines} />
+    ) : (
+      <InterviewQuote quote={section.quote} />
+    )
+  ))}
+
+  <GridBlocks variant="fullwidth">
+    <GridBlock
+      variant={content.gridBlock.variant}
+      headline={content.gridBlock.headline}
+      position={content.gridBlock.position}
+      color={content.gridBlock.color}
+      title={content.gridBlock.title}
+      link={content.gridBlock.link}
+      image={content.gridBlock.image}
+    />
+  </GridBlocks>
+
+  <FullBleedBlocks>
+    {content.fullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        title={block.title}
+        image={block.image}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>
