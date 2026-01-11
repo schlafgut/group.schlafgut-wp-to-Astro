@@ -1,0 +1,96 @@
+---
+import Image from '../Image.astro';
+
+interface ImageItem {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  srcset?: string;
+  description?: string;
+}
+
+interface Props {
+  images: ImageItem[];
+  background?: 'default' | 'yellow';
+  class?: string;
+}
+
+const { images, background = 'default', class: className = '' } = Astro.props;
+---
+
+<section
+  class:list={['section__three-images', 'default', className]}
+  data-background={background}
+>
+  {images.map((img) => (
+    <div class="slideInElement image">
+      <Image
+        src={img.src}
+        alt={img.alt || ''}
+        width={img.width}
+        height={img.height}
+        srcset={img.srcset}
+      />
+      {img.description && (
+        <div class="description">
+          <p set:html={img.description} />
+        </div>
+      )}
+    </div>
+  ))}
+</section>
+
+<style>
+  .section__three-images {
+    font-size: 0;
+    line-height: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    .section__three-images {
+      grid-template-columns: 100%;
+      gap: 3.9rem 0;
+    }
+  }
+
+  .section__three-images[data-background="yellow"] {
+    background-color: var(--colorYellow);
+    padding-bottom: 4.3rem;
+  }
+
+  .section__three-images[data-background="yellow"] .image .description p {
+    max-width: none;
+  }
+
+  .section__three-images .image :global(img) {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
+
+  .section__three-images .image .description {
+    font-size: var(--fontSize12);
+    line-height: 1.5;
+    letter-spacing: 0.21em;
+    text-align: left;
+    text-transform: uppercase;
+    padding: 1.1rem 1.7rem 0 1.7rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .section__three-images .image .description {
+      font-size: var(--fontSize9);
+      line-height: 1.555;
+      padding: 0.7rem 1rem 0 1rem;
+    }
+  }
+
+  .section__three-images .image .description p {
+    max-width: 47em;
+    margin: 0;
+  }
+</style>
