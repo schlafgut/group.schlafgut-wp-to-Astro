@@ -1,0 +1,63 @@
+---
+/**
+ * Paid Social Marketer Job Detail Page (German)
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroTextJobs from '../../components/sections/HeroTextJobs.astro';
+import ColumnsWithHeadline from '../../components/sections/ColumnsWithHeadline.astro';
+import GridBlocks from '../../components/sections/GridBlocks.astro';
+import GridBlock from '../../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../../components/sections/FullBleedBlock.astro';
+import { jobsContent } from '../../i18n/content/jobs';
+
+const job = jobsContent['paid-social-marketer'];
+---
+
+<BaseLayout
+  title={job.meta.title}
+  description={job.meta.description}
+>
+  <HeroTextJobs
+    title={job.hero.title}
+    subtitle={job.hero.subtitle}
+    taglines={job.hero.taglines}
+  />
+
+  <ColumnsWithHeadline
+    background="beige"
+    lines={job.sections.map((section) => ({
+      headline: section.headline,
+      content: section.content,
+    }))}
+  />
+
+  <ColumnsWithHeadline
+    background="yellow"
+    lines={[{
+      headline: job.whyUs.headline,
+      content: job.whyUs.content,
+    }]}
+  />
+
+  <GridBlocks variant="fullwidth">
+    <GridBlock
+      variant="wide"
+      headline="plantin"
+      position="top"
+      color="black"
+      title={job.gridBlock.title}
+      image={job.gridBlock.image}
+    />
+  </GridBlocks>
+
+  <FullBleedBlocks>
+    {job.fullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        title={block.title}
+        image={block.image}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>

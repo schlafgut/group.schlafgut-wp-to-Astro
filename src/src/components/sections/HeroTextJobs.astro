@@ -2,18 +2,20 @@
 interface Props {
   title: string;
   subtitle?: string;
-  location?: string;
+  taglines?: string[];
   class?: string;
 }
 
-const { title, subtitle, location, class: className = '' } = Astro.props;
+const { title, subtitle, taglines = [], class: className = '' } = Astro.props;
 ---
 
 <section class:list={['section__hero-text-jobs', className]}>
   <div class="innerwrapper">
-    {subtitle && <p>&nbsp;</p>}
     <h1 set:html={title} />
-    {location && <p>{location}</p>}
+    {subtitle && <p><strong set:html={subtitle} /></p>}
+    {taglines.map((tagline) => (
+      <h4 set:html={tagline} />
+    ))}
   </div>
 </section>
 
@@ -89,6 +91,24 @@ const { title, subtitle, location, class: className = '' } = Astro.props;
       margin: 0 0 2.25em 0;
       text-align: left;
       line-height: 1.125;
+    }
+  }
+
+  .section__hero-text-jobs .innerwrapper h4 {
+    margin: 0.5em 0;
+    font-family: "PlantinMTPro", serif;
+    font-size: var(--fontSize24);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-transform: none;
+  }
+
+  @media (max-width: 768px) {
+    .section__hero-text-jobs .innerwrapper h4 {
+      font-size: var(--fontSize17);
+      text-align: left;
     }
   }
 </style>
