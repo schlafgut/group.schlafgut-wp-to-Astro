@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Agrandir";
+  src: url("/fonts/agrandir-regular.woff2") format("woff2"),
+       url("/fonts/agrandir-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Agrandir";
+  src: url("/fonts/agrandir-medium.woff2") format("woff2"),
+       url("/fonts/agrandir-medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AgrandirWide";
+  src: url("/fonts/PPAgrandir-WideBlack.woff2") format("woff2"),
+       url("/fonts/PPAgrandir-WideBlack.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlantinMTPro";
+  src: url("/fonts/PlantinMTPro-Light.woff2") format("woff2"),
+       url("/fonts/PlantinMTPro-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
