@@ -392,4 +392,4 @@ Der `dist/`-Ordner kann auf jedem statischen Hosting deployed werden:
 
 ## Mitwirkende
 
-Migriert mit Claude Code (Anthropic).
+Nikola Sretkovic
