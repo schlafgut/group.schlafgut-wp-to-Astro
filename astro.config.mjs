@@ -7,9 +7,11 @@ import keystatic from '@keystatic/astro';
 import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
+// Astro 5: output 'server' für Keystatic API-Routen (SSR)
+// Seiten werden explizit mit `export const prerender = true` vorgerendert
 export default defineConfig({
   site: 'https://group.schlafgut.com',
-  output: 'static',
+  output: 'server',
   adapter: netlify(),
   integrations: [
     react(),
