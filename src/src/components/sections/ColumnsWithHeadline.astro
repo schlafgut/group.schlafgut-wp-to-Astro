@@ -1,0 +1,184 @@
+---
+interface ColumnLine {
+  headline: string;
+  content: string;
+  image?: {
+    src: string;
+    style?: string;
+  };
+}
+
+interface Props {
+  background?: 'white' | 'beige' | 'yellow';
+  lines: ColumnLine[];
+  class?: string;
+}
+
+const { background = 'white', lines, class: className = '' } = Astro.props;
+---
+
+<section
+  class:list={['section__columns-with-headline', 'default', className]}
+  data-background={background}
+>
+  <div class="innerwrapper smaller">
+    {lines.map((line) => (
+      <div class="column__line">
+        <div class="column">
+          <h2 set:html={line.headline} />
+          {line.image && (
+            <img
+              src={line.image.src}
+              class="inner-image"
+              style={line.image.style}
+              alt=""
+            />
+          )}
+        </div>
+        <div class="column">
+          <Fragment set:html={line.content} />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section__columns-with-headline[data-background="beige"] {
+    background-color: var(--colorBeigeLight);
+  }
+
+  .section__columns-with-headline[data-background="beige"] .innerwrapper {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__columns-with-headline[data-background="beige"] .innerwrapper {
+      padding-top: 4.7rem;
+      padding-bottom: 4.7rem;
+    }
+  }
+
+  .section__columns-with-headline[data-background="yellow"] {
+    background-color: var(--colorYellow);
+  }
+
+  .section__columns-with-headline[data-background="yellow"] .innerwrapper {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__columns-with-headline[data-background="yellow"] .innerwrapper {
+      padding-top: 4.7rem;
+      padding-bottom: 4.7rem;
+    }
+  }
+
+  .section__columns-with-headline .innerwrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8.3rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .section__columns-with-headline {
+      --additionalSpacingTop: 2rem;
+      --additionalSpacingBottom: 2.6rem;
+    }
+
+    .section__columns-with-headline .innerwrapper {
+      gap: 4.3rem 0;
+    }
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line {
+    display: grid;
+    grid-template-columns: 0.76fr 1fr;
+    gap: 0 13.4rem;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .section__columns-with-headline .innerwrapper .column__line {
+      grid-template-columns: 100%;
+      gap: 1.9rem 0;
+    }
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column {
+    font-family: "PlantinMTPro", serif;
+    font-size: var(--fontSize24);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .section__columns-with-headline .innerwrapper .column__line .column {
+      font-size: var(--fontSize17);
+      line-height: 1.44;
+    }
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column h2 {
+    margin: 0;
+    font-family: "AgrandirWide", sans-serif;
+    font-weight: 900;
+    font-size: var(--fontSize24);
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 768px) {
+    .section__columns-with-headline .innerwrapper .column__line .column h2 {
+      font-size: var(--fontSize17);
+    }
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column .inner-image {
+    margin-top: 1.5rem;
+    max-width: var(--width, 100%);
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(.cta__button) {
+    background-color: var(--colorBlack);
+    color: var(--colorWhite);
+    font-family: "Agrandir", sans-serif;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(a) {
+    color: inherit;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(ul) {
+    padding-left: 0.7em;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(ul li) {
+    margin: 0.45em 0;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(ul li:first-child) {
+    margin-top: 0;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(ul:first-child) {
+    margin-top: 0;
+  }
+
+  .section__columns-with-headline .innerwrapper .column__line .column :global(ul:last-child) {
+    margin-bottom: 0;
+  }
+</style>

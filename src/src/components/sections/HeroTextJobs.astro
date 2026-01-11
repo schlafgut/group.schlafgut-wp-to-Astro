@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  location?: string;
+  class?: string;
+}
+
+const { title, subtitle, location, class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__hero-text-jobs', className]}>
+  <div class="innerwrapper">
+    {subtitle && <p>&nbsp;</p>}
+    <h1 set:html={title} />
+    {location && <p>{location}</p>}
+  </div>
+</section>
+
+<style>
+  .section__hero-text-jobs {
+    margin-top: 0 !important;
+  }
+
+  .section__hero-text-jobs .innerwrapper {
+    padding-top: 3.8rem;
+    font-family: "PlantinMTPro", serif;
+    font-size: var(--fontSize24);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-align: center;
+    padding-bottom: 2.6rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__hero-text-jobs .innerwrapper {
+      padding-top: 1rem;
+      font-size: var(--fontSize17);
+      line-height: 1.3;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.8rem;
+      text-align: left;
+    }
+  }
+
+  .section__hero-text-jobs .innerwrapper p {
+    max-width: 32em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section__hero-text-jobs .innerwrapper p:first-child {
+    margin-top: 0;
+  }
+
+  @media (max-width: 768px) {
+    .section__hero-text-jobs .innerwrapper p {
+      max-width: none;
+    }
+
+    .section__hero-text-jobs .innerwrapper p br {
+      display: none;
+    }
+
+    .section__hero-text-jobs .innerwrapper p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .section__hero-text-jobs .innerwrapper h1 {
+    margin: 0.6em 0 0.3em 0;
+    color: var(--colorBlack);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: var(--fontSize60);
+    font-family: "PlantinMTPro", serif;
+    font-weight: 300;
+    text-transform: none;
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 768px) {
+    .section__hero-text-jobs .innerwrapper h1 {
+      font-size: var(--fontSize32);
+      margin: 0 0 2.25em 0;
+      text-align: left;
+      line-height: 1.125;
+    }
+  }
+</style>
