@@ -1,13 +1,18 @@
 ---
+/**
+ * English Homepage
+ * Note: The original WordPress English homepage was empty.
+ * This page shows minimal content - could be expanded later.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { homepageContent } from '../../i18n/content/homepage';
+
+const content = homepageContent.en;
 ---
 
 <BaseLayout
-  title="schlafgut | Fitted sheets and bed linen"
-  description="schlafgut produces environmentally friendly and creatively designed textiles and accessories for the bedroom - in proud family tradition since 1952."
+  title={content.meta.title}
+  description={content.meta.description}
 >
-  <main>
-    <h1>schlafgut</h1>
-    <p>Homepage (EN)</p>
-  </main>
+  {/* English homepage was empty in original WordPress */}
 </BaseLayout>
