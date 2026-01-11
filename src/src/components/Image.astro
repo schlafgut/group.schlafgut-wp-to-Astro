@@ -1,0 +1,98 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  srcset?: string;
+  sizes?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const {
+  src,
+  alt = '',
+  width,
+  height,
+  srcset,
+  sizes = 'auto',
+  class: className = '',
+  loading = 'lazy',
+} = Astro.props;
+
+// Create placeholder SVG for lazy loading
+const placeholderSvg = width && height
+  ? `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${height}'%3E%3C/svg%3E`
+  : undefined;
+
+const isLazy = loading === 'lazy';
+---
+
+<img
+  class:list={['lazyload', className]}
+  width={width}
+  height={height}
+  src={isLazy && placeholderSvg ? placeholderSvg : src}
+  data-src={isLazy ? src : undefined}
+  data-srcset={isLazy && srcset ? srcset : undefined}
+  srcset={!isLazy && srcset ? srcset : undefined}
+  data-sizes={isLazy ? sizes : undefined}
+  sizes={!isLazy ? sizes : undefined}
+  alt={alt}
+  loading={loading}
+/>
+
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  img.lazyload {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+  }
+
+  img.lazyloaded {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Simple lazy loading implementation
+  const lazyImages = document.querySelectorAll('img.lazyload[data-src]');
+
+  const loadImage = (img: HTMLImageElement) => {
+    const src = img.dataset.src;
+    const srcset = img.dataset.srcset;
+
+    if (src) {
+      img.src = src;
+    }
+    if (srcset) {
+      img.srcset = srcset;
+    }
+
+    img.classList.remove('lazyload');
+    img.classList.add('lazyloaded');
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadImage(entry.target as HTMLImageElement);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '50px 0px',
+    });
+
+    lazyImages.forEach((img) => observer.observe(img));
+  } else {
+    // Fallback for browsers without IntersectionObserver
+    lazyImages.forEach((img) => loadImage(img as HTMLImageElement));
+  }
+</script>
