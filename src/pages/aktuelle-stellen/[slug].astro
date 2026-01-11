@@ -1,0 +1,255 @@
+---
+/**
+ * Dynamic Job Detail Page from Content Collection
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroTextJobs from '../../components/sections/HeroTextJobs.astro';
+import ColumnsWithHeadline from '../../components/sections/ColumnsWithHeadline.astro';
+import GridBlocks from '../../components/sections/GridBlocks.astro';
+import GridBlock from '../../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../../components/sections/FullBleedBlock.astro';
+import workLifeImage from '../../assets/images/work_life_wide-1680x925.jpeg';
+import historieImage from '../../assets/images/Bildschirmfoto-2021-01-26-um-14.17-3-1680x2249.jpg';
+import produktionImage from '../../assets/images/DSC2016-7-1680x2249.jpg';
+import produkteImage from '../../assets/images/Bildschirmfoto-2021-01-26-um-14.17-5-1-1680x2249.jpg';
+import auszeichnetImage from '../../assets/images/DSC2016-8-1680x2249.jpg';
+
+export async function getStaticPaths() {
+  const jobs = await getCollection('jobs', ({ data }) => data.published);
+  return jobs.map((job) => ({
+    params: { slug: job.slug },
+    props: { job },
+  }));
+}
+
+const { job } = Astro.props;
+const { Content } = await job.render();
+
+const employmentTypeLabels: Record<string, string> = {
+  vollzeit: 'Vollzeit',
+  teilzeit: 'Teilzeit',
+  werkstudent: 'Werkstudent',
+  praktikum: 'Praktikum',
+};
+
+// Parse requirements and benefits from YAML string to HTML
+function parseListContent(content: string | undefined): string {
+  if (!content) return '';
+  return '<ul>' + content
+    .split('\n')
+    .filter(line => line.trim().startsWith('-'))
+    .map(line => `<li>${line.trim().slice(1).trim()}</li>`)
+    .join('') + '</ul>';
+}
+
+const requirementsHtml = parseListContent(job.data.requirements);
+const benefitsHtml = parseListContent(job.data.benefits);
+
+// Shared footer blocks for all job pages
+const sharedFullBleedBlocks = [
+  {
+    href: '/unsere-historie/',
+    title: 'Unsere Historie',
+    image: historieImage,
+  },
+  {
+    href: '/unsere-produktion/',
+    title: 'Unsere Produktion',
+    image: produktionImage,
+  },
+  {
+    href: '/produkte-entdecken/',
+    title: 'Produkte entdecken',
+    image: produkteImage,
+  },
+  {
+    href: '/was-uns-ausmacht/',
+    title: 'was uns ausmacht',
+    image: auszeichnetImage,
+  },
+];
+---
+
+<BaseLayout
+  title={`${job.data.title} | schlafgut`}
+  currentPath={Astro.url.pathname}
+>
+  <HeroTextJobs
+    title={`${job.data.title}<br />${job.data.gender}`}
+    subtitle={`${employmentTypeLabels[job.data.employmentType]}, ${job.data.location}`}
+  />
+
+  <ColumnsWithHeadline
+    background="beige"
+    lines={[
+      {
+        headline: 'Deine Aufgaben',
+        content: '',
+      },
+      {
+        headline: 'Was bringst du mit?',
+        content: requirementsHtml,
+      },
+    ]}
+  />
+
+  <!-- Tasks content from Markdoc body -->
+  <section class="section__columns-with-headline tasks-content" data-background="beige">
+    <div class="innerwrapper smaller">
+      <div class="column__line">
+        <div class="column">
+          <h2>Deine Aufgaben</h2>
+        </div>
+        <div class="column">
+          <Content />
+        </div>
+      </div>
+      <div class="column__line">
+        <div class="column">
+          <h2>Was bringst du mit?</h2>
+        </div>
+        <div class="column">
+          <Fragment set:html={requirementsHtml} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ColumnsWithHeadline
+    background="yellow"
+    lines={[{
+      headline: 'Warum wir?',
+      content: `${benefitsHtml}
+<p>Interesse? Dann bewirb Dich und sende deine Unterlagen an:</p>
+<p><a href="mailto:${job.data.contactEmail}">${job.data.contactEmail}</a></p>
+<p><a href="mailto:${job.data.contactEmail}" class="cta__button">jetzt bewerben</a></p>`,
+    }]}
+  />
+
+  <GridBlocks variant="fullwidth">
+    <GridBlock
+      variant="wide"
+      headline="plantin"
+      position="top"
+      color="black"
+      title="Work-Life-Balance ist bei uns keine Phrase."
+      image={{
+        src: workLifeImage.src,
+        width: workLifeImage.width,
+        height: workLifeImage.height,
+      }}
+    />
+  </GridBlocks>
+
+  <FullBleedBlocks>
+    {sharedFullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        title={block.title}
+        image={{
+          src: block.image.src,
+          width: block.image.width,
+          height: block.image.height,
+        }}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>
+
+<style>
+  .tasks-content {
+    background-color: var(--colorBeigeLight);
+  }
+
+  .tasks-content .innerwrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8.3rem 0;
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .tasks-content .innerwrapper {
+      gap: 4.3rem 0;
+      padding-top: 4.7rem;
+      padding-bottom: 4.7rem;
+    }
+  }
+
+  .tasks-content .column__line {
+    display: grid;
+    grid-template-columns: 0.76fr 1fr;
+    gap: 0 13.4rem;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .tasks-content .column__line {
+      grid-template-columns: 100%;
+      gap: 1.9rem 0;
+    }
+  }
+
+  .tasks-content .column {
+    font-family: "PlantinMTPro", serif;
+    font-size: var(--fontSize24);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .tasks-content .column {
+      font-size: var(--fontSize17);
+      line-height: 1.44;
+    }
+  }
+
+  .tasks-content .column h2 {
+    margin: 0;
+    font-family: "AgrandirWide", sans-serif;
+    font-weight: 900;
+    font-size: var(--fontSize24);
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 768px) {
+    .tasks-content .column h2 {
+      font-size: var(--fontSize17);
+    }
+  }
+
+  .tasks-content .column :global(ul) {
+    padding-left: 0.7em;
+  }
+
+  .tasks-content .column :global(ul li) {
+    margin: 0.45em 0;
+  }
+
+  .tasks-content .column :global(ul li:first-child) {
+    margin-top: 0;
+  }
+
+  .tasks-content .column :global(ul:first-child) {
+    margin-top: 0;
+  }
+
+  .tasks-content .column :global(ul:last-child) {
+    margin-bottom: 0;
+  }
+
+  .tasks-content .column :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .tasks-content .column :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
