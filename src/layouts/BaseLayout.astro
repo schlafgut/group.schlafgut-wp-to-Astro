@@ -1,16 +1,32 @@
 ---
 import '../styles/global.css';
+import '../styles/components.css';
 import { getLangFromUrl, getHreflangs, getLangHtmlAttr } from '../i18n/utils';
+import Ticker from '../components/Ticker.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import { ui } from '../i18n/navigation';
 
 interface Props {
   title: string;
   description?: string;
+  tickerText?: string;
+  tickerVariant?: 'default' | 'yellow';
 }
 
-const { title, description = '' } = Astro.props;
+const {
+  title,
+  description = '',
+  tickerText = 'Paid Social Marketer (m/w/d), Marktplatzmanager (m/w/d), Werkstudenten (m/w/d) <strong>join us!!!</strong>',
+  tickerVariant = 'default',
+} = Astro.props;
+
 const lang = getLangFromUrl(Astro.url);
 const langHtml = getLangHtmlAttr(lang);
 const hreflangs = getHreflangs(Astro.url.pathname);
+const currentPath = Astro.url.pathname;
+const t = ui[lang];
 ---
 
 <!doctype html>
@@ -27,7 +43,18 @@ const hreflangs = getHreflangs(Astro.url.pathname);
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body>
-    <slot />
+  <body class="frontend">
+    <Ticker text={tickerText} variant={tickerVariant} />
+    <Header currentPath={currentPath} />
+
+    <div class="outerwrapper">
+      <slot />
+    </div>
+
+    <Footer />
+
+    <Button href="https://www.schlafgut.com" target="_blank" variant="shop" class="only__mobile">
+      {t.shopNow}
+    </Button>
   </body>
 </html>
