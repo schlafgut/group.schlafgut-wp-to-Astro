@@ -4,14 +4,22 @@ export default config({
   storage: {
     kind: 'local',
   },
+  ui: {
+    brand: {
+      name: 'schlafgut CMS',
+    },
+  },
   collections: {
     jobs: collection({
       label: 'Stellenanzeigen',
       slugField: 'title',
       path: 'src/content/jobs/*',
-      format: { contentField: 'tasks' },
+      format: { contentField: 'content' },
+      entryLayout: 'form',
       schema: {
-        title: fields.slug({ name: { label: 'Jobtitel' } }),
+        title: fields.slug({
+          name: { label: 'Jobtitel' }
+        }),
         gender: fields.text({
           label: 'Geschlecht',
           defaultValue: 'm/w/d'
@@ -30,18 +38,6 @@ export default config({
           label: 'Standort',
           defaultValue: 'Eislingen'
         }),
-        tasks: fields.markdoc({
-          label: 'Aufgaben',
-          description: 'Deine Aufgaben in dieser Position'
-        }),
-        requirements: fields.markdoc({
-          label: 'Anforderungen',
-          description: 'Was bringst du mit?'
-        }),
-        benefits: fields.markdoc({
-          label: 'Benefits',
-          description: 'Warum wir?'
-        }),
         contactEmail: fields.text({
           label: 'Bewerbungs-Email',
           defaultValue: 'bewerbung@schlafgut.com'
@@ -49,6 +45,23 @@ export default config({
         published: fields.checkbox({
           label: 'Veröffentlicht',
           defaultValue: true
+        }),
+        // Simple multiline text fields - stored in frontmatter as YAML strings
+        tasks: fields.text({
+          label: 'Deine Aufgaben',
+          multiline: true
+        }),
+        requirements: fields.text({
+          label: 'Was bringst du mit?',
+          multiline: true
+        }),
+        benefits: fields.text({
+          label: 'Warum wir?',
+          multiline: true
+        }),
+        // Content field required by Keystatic
+        content: fields.markdoc({
+          label: 'Zusätzliche Infos (optional)',
         }),
       },
     }),
