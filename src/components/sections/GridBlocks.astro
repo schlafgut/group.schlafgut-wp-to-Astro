@@ -1,0 +1,43 @@
+---
+interface Props {
+  variant?: 'boxed' | 'fullwidth';
+  class?: string;
+}
+
+const { variant = 'boxed', class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__grid-blocks', variant, 'default', className]}>
+  <div class="innerwrapper smaller">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section__grid-blocks .innerwrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--gutterSpacing) + 0.5rem) var(--gutterSpacing);
+  }
+
+  @media (max-width: 768px) {
+    .section__grid-blocks .innerwrapper {
+      grid-template-columns: 100%;
+      gap: var(--gutterSpacing) 0;
+    }
+
+    .section__grid-blocks .innerwrapper.smaller {
+      width: calc(100% - var(--sideSpacing) - var(--sideSpacing));
+    }
+  }
+
+  .section__grid-blocks.boxed .innerwrapper {
+    max-width: 1630px;
+  }
+
+  .section__grid-blocks.fullwidth .innerwrapper {
+    max-width: none;
+    width: 100%;
+    gap: 0;
+  }
+</style>
