@@ -3,13 +3,14 @@
 ## Current Status
 **Phase**: 2 - Component Library
 **Milestone**: 1 - MVP Launch
+**Next Plan**: 02-PLAN.md (Section Components)
 
 ## Phase Progress
 
 | Phase | Name | Status | Plan |
 |-------|------|--------|------|
 | 1 | Foundation Setup | **completed** | 01-PLAN.md |
-| 2 | Component Library | pending | - |
+| 2 | Component Library | **in progress** | 01-PLAN.md ✅, 02-PLAN.md |
 | 3 | Page Migration | pending | - |
 | 4 | Optimization | pending | - |
 | 5 | Polish & Launch | pending | - |
@@ -24,6 +25,13 @@
   - Task 1: Astro project initialized (`89e4f6f`)
   - Task 2: Design system set up (`b88de26`)
   - Task 3: Base layout with i18n created (`4b60437`)
+- **Phase 2 planned** (2 plans created):
+  - Plan 01: Layout Components (Ticker, Header, Nav, Footer, LanguageSwitcher)
+  - Plan 02: Section Components (Hero, GridBlocks, Teaser, FullBleed)
+- **Phase 2 Plan 01 executed** (3 tasks completed):
+  - Task 1: Atomic components created (`7b45a56`)
+  - Task 2: Layout components created (`57a55f0`)
+  - Task 3: BaseLayout integration (`50a5a0b`)
 
 ---
 
@@ -33,7 +41,8 @@ None
 ## Notes
 - Phase 4 flagged for research (jQuery analysis)
 - All URL structures must be preserved for SEO
-- Phase 1 complete - foundation ready for component development
+- Mobile menu implementation deferred to Phase 4 (jQuery replacement)
+- Layout components complete - ready for section components
 
 ---
 *Last updated: 2026-01-11*
