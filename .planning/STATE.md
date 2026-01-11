@@ -1,9 +1,9 @@
 # Project State
 
 ## Current Status
-**Phase**: 3.1 - Keystatic CMS Jobs
+**Phase**: 3 - Page Migration (DE only)
 **Milestone**: 1 - MVP Launch
-**Next Plan**: 03.1-02-PLAN.md (Job-Seiten mit Content Collection rendern)
+**Next Plan**: Phase 3.1 complete - Continue with Phase 3 remaining plans
 
 ## Phase Progress
 
@@ -12,7 +12,7 @@
 | 1 | Foundation Setup | **completed** | 01-PLAN.md ✅ |
 | 2 | Component Library | **completed** | 01-PLAN.md ✅, 02-PLAN.md ✅ |
 | 3 | Page Migration (DE only) | **in progress** | 01-PLAN.md ✅, 02-PLAN.md ✅, 03-PLAN.md (DE only), 04-PLAN.md |
-| 3.1 | Keystatic CMS Jobs | **in progress** | 03.1-01-PLAN.md ✅, 03.1-02-PLAN.md |
+| 3.1 | Keystatic CMS Jobs | **completed** | 03.1-01-PLAN.md ✅, 03.1-02-PLAN.md ✅ |
 | 4 | Optimization | pending | - |
 | 5 | Polish & Launch | pending | - |
 
@@ -67,6 +67,12 @@
   - Task 3: Astro Content Collection for jobs (`436c3bf`)
   - Admin UI unter /keystatic funktioniert
   - Jobs Collection mit vollständigem Schema
+- **Phase 3.1 Plan 02 executed** (3 tasks completed):
+  - Task 1: 5 Job-Dateien aus Original migriert (`e875fef`)
+  - Task 2: Dynamische Job-Einzelseite `[slug].astro` (`0cba9d2`)
+  - Task 3: Job-Übersichtsseite mit Content Collection (`31fb5e5`)
+  - Alte statische Job-Seiten entfernt (ersetzt durch dynamische Route)
+  - **Phase 3.1 COMPLETE** - Keystatic CMS für Jobs vollständig integriert
 
 ---
 
@@ -88,6 +94,7 @@ None
 - Homepage content stored in `src/i18n/content/homepage.ts` for maintainability
 - **Bildoptimierung abgeschlossen** - WebP, Lazy Loading, Eager Hero implementiert
 - **Keystatic CMS eingerichtet** - Admin UI unter /keystatic, Jobs Collection bereit
+- **Phase 3.1 abgeschlossen** - 5 Jobs migriert, dynamische Seiten, CMS-Integration komplett
 
 ---
 *Last updated: 2026-01-11*
