@@ -1,18 +1,14 @@
 import { config, collection, fields } from '@keystatic/core';
 
+const isLocal = import.meta.env.DEV;
+
 export default config({
-  storage: import.meta.env.DEV
+  storage: isLocal
     ? { kind: 'local' }
-    : {
-        kind: 'github',
-        repo: 'schlafgut/group.schlafgut',
-        branchPrefix: 'cms/',
-      },
-  cloud: import.meta.env.DEV
-    ? undefined
-    : {
-        project: 'schlafgut/group-schlafgut',
-      },
+    : { kind: 'cloud' },
+  cloud: {
+    project: 'schlafgut-group/group-schlafgut',
+  },
   ui: {
     brand: {
       name: 'schlafgut CMS',

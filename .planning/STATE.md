@@ -81,6 +81,15 @@
   - Alle Schema-Felder haben defaults (keine blockierenden required fields)
   - 5 Job-Dateien auf einfaches YAML multiline Format migriert
   - Keystatic Admin UI zeigt Inhalte korrekt in Textareas an
+- **Netlify Adapter** (`e153ce9`):
+  - @astrojs/netlify Adapter installiert
+  - Behebt 404-Fehler auf Netlify Deployment
+- **Keystatic Cloud Mode** (live-ready):
+  - Storage auf `kind: 'cloud'` für Production umgestellt
+  - Keystatic Cloud Project: `schlafgut-group/group-schlafgut`
+  - Dev-Weiche: `kind: 'local'` für lokale Entwicklung ohne Login
+  - Astro `output: 'hybrid'` für SSR + Static Mix
+  - **CMS ist jetzt live-ready für Netlify**
 
 ---
 
@@ -103,6 +112,7 @@ None
 - **Bildoptimierung abgeschlossen** - WebP, Lazy Loading, Eager Hero implementiert
 - **Keystatic CMS eingerichtet** - Admin UI unter /keystatic, Jobs Collection bereit
 - **Phase 3.1 abgeschlossen** - 5 Jobs migriert, dynamische Seiten, CMS-Integration komplett
+- **Keystatic Cloud Mode live-ready** - Production: cloud storage, Dev: local storage ohne Login
 
 ---
 *Last updated: 2026-01-12*
