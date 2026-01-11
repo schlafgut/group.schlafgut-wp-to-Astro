@@ -1,10 +1,12 @@
 ---
 /**
  * Dynamic Job Detail Page from Content Collection
+ * Uses ColumnsWithHeadline component for proper styling
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroTextJobs from '../../components/sections/HeroTextJobs.astro';
+import ColumnsWithHeadline from '../../components/sections/ColumnsWithHeadline.astro';
 import GridBlocks from '../../components/sections/GridBlocks.astro';
 import GridBlock from '../../components/sections/GridBlock.astro';
 import FullBleedBlocks from '../../components/sections/FullBleedBlocks.astro';
@@ -24,7 +26,6 @@ export async function getStaticPaths() {
 }
 
 const { job } = Astro.props;
-const { Content } = await job.render();
 
 const employmentTypeLabels: Record<string, string> = {
   vollzeit: 'Vollzeit',
@@ -33,26 +34,64 @@ const employmentTypeLabels: Record<string, string> = {
   praktikum: 'Praktikum',
 };
 
-// Parse requirements and benefits from YAML string to HTML
-function parseMarkdown(text: string): string {
-  // Convert **bold** to <strong>
-  return text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+// Convert multiline text to HTML with list items
+function textToHtml(text: string | undefined): string {
+  if (!text) return '';
+
+  // Split into lines and process
+  const lines = text.split('\n').filter(line => line.trim());
+
+  // Check if lines start with - or * (list items)
+  const hasList = lines.some(line => /^[-*•]\s/.test(line.trim()));
+
+  if (hasList) {
+    const items = lines.map(line => {
+      // Remove leading - or * and trim
+      const content = line.replace(/^[-*•]\s*/, '').trim();
+      // Convert **bold** to <strong>
+      const withBold = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      return `<li>${withBold}</li>`;
+    }).join('\n');
+    return `<ul>\n${items}\n</ul>`;
+  }
+
+  // Otherwise treat as paragraphs
+  return lines.map(line => {
+    const withBold = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    return `<p>${withBold}</p>`;
+  }).join('\n');
 }
 
-function parseListContent(content: string | undefined): string {
-  if (!content) return '';
-  return '<ul>' + content
-    .split('\n')
-    .filter(line => line.trim().startsWith('-'))
-    .map(line => {
-      const text = line.trim().slice(1).trim();
-      return `<li>${parseMarkdown(text)}</li>`;
-    })
-    .join('') + '</ul>';
+// Build sections for tasks and requirements (beige background)
+const beigeSections = [];
+
+if (job.data.tasks) {
+  beigeSections.push({
+    headline: 'Deine Aufgaben',
+    content: textToHtml(job.data.tasks),
+  });
 }
 
-const requirementsHtml = parseListContent(job.data.requirements);
-const benefitsHtml = parseListContent(job.data.benefits);
+if (job.data.requirements) {
+  beigeSections.push({
+    headline: 'Was bringst<br />du mit?',
+    content: textToHtml(job.data.requirements),
+  });
+}
+
+// Build benefits section (yellow background)
+const yellowSections = [];
+
+if (job.data.benefits) {
+  yellowSections.push({
+    headline: 'Warum wir?',
+    content: textToHtml(job.data.benefits) + `
+      <p style="margin-top: 2rem;">Interesse? Dann bewirb Dich und sende deine Unterlagen an:<br />
+      <a href="mailto:${job.data.contactEmail}">${job.data.contactEmail}</a></p>
+      <p><a href="mailto:${job.data.contactEmail}" class="cta__button">jetzt bewerben</a></p>
+    `,
+  });
+}
 
 // Shared footer blocks for all job pages
 const sharedFullBleedBlocks = [
@@ -88,44 +127,19 @@ const sharedFullBleedBlocks = [
     subtitle={`${employmentTypeLabels[job.data.employmentType]}, ${job.data.location}`}
   />
 
-  <!-- Tasks and Requirements -->
-  <section class="section__columns-with-headline tasks-content" data-background="beige">
-    <div class="innerwrapper smaller">
-      <div class="column__line">
-        <div class="column">
-          <h2>Deine Aufgaben</h2>
-        </div>
-        <div class="column">
-          <Content />
-        </div>
-      </div>
-      <div class="column__line">
-        <div class="column">
-          <h2>Was bringst du mit?</h2>
-        </div>
-        <div class="column">
-          <Fragment set:html={requirementsHtml} />
-        </div>
-      </div>
-    </div>
-  </section>
+  {beigeSections.length > 0 && (
+    <ColumnsWithHeadline
+      background="beige"
+      lines={beigeSections}
+    />
+  )}
 
-  <!-- Benefits Section -->
-  <section class="section__columns-with-headline benefits-content" data-background="yellow">
-    <div class="innerwrapper smaller">
-      <div class="column__line">
-        <div class="column">
-          <h2>Warum wir?</h2>
-        </div>
-        <div class="column">
-          <Fragment set:html={benefitsHtml} />
-          <p>Interesse? Dann bewirb Dich und sende deine Unterlagen an:</p>
-          <p><a href={`mailto:${job.data.contactEmail}`}>{job.data.contactEmail}</a></p>
-          <p><a href={`mailto:${job.data.contactEmail}`} class="cta__button">jetzt bewerben</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
+  {yellowSections.length > 0 && (
+    <ColumnsWithHeadline
+      background="yellow"
+      lines={yellowSections}
+    />
+  )}
 
   <GridBlocks variant="fullwidth">
     <GridBlock
@@ -156,145 +170,3 @@ const sharedFullBleedBlocks = [
     ))}
   </FullBleedBlocks>
 </BaseLayout>
-
-<style>
-  /* Shared styles for content sections */
-  .tasks-content,
-  .benefits-content {
-    padding: 0;
-  }
-
-  .tasks-content {
-    background-color: var(--colorBeigeLight);
-  }
-
-  .benefits-content {
-    background-color: var(--colorYellow);
-  }
-
-  .tasks-content .innerwrapper,
-  .benefits-content .innerwrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 8.3rem 0;
-    padding-top: 5.5rem;
-    padding-bottom: 5.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .tasks-content .innerwrapper,
-    .benefits-content .innerwrapper {
-      gap: 4.3rem 0;
-      padding-top: 4.7rem;
-      padding-bottom: 4.7rem;
-    }
-  }
-
-  .tasks-content .column__line,
-  .benefits-content .column__line {
-    display: grid;
-    grid-template-columns: 0.76fr 1fr;
-    gap: 0 13.4rem;
-    text-align: left;
-  }
-
-  @media (max-width: 768px) {
-    .tasks-content .column__line,
-    .benefits-content .column__line {
-      grid-template-columns: 100%;
-      gap: 1.9rem 0;
-    }
-  }
-
-  .tasks-content .column,
-  .benefits-content .column {
-    font-family: "PlantinMTPro", serif;
-    font-size: var(--fontSize24);
-    font-weight: 300;
-    line-height: 1.25;
-    letter-spacing: 0.01em;
-    text-align: left;
-  }
-
-  @media (max-width: 768px) {
-    .tasks-content .column,
-    .benefits-content .column {
-      font-size: var(--fontSize17);
-      line-height: 1.44;
-    }
-  }
-
-  .tasks-content .column h2,
-  .benefits-content .column h2 {
-    margin: 0;
-    font-family: "AgrandirWide", sans-serif;
-    font-weight: 900;
-    font-size: var(--fontSize24);
-    text-transform: uppercase;
-    line-height: 1.2;
-    letter-spacing: 0.05em;
-  }
-
-  @media (max-width: 768px) {
-    .tasks-content .column h2,
-    .benefits-content .column h2 {
-      font-size: var(--fontSize17);
-    }
-  }
-
-  .tasks-content .column :global(ul),
-  .benefits-content .column :global(ul) {
-    padding-left: 0.7em;
-  }
-
-  .tasks-content .column :global(ul li),
-  .benefits-content .column :global(ul li) {
-    margin: 0.45em 0;
-  }
-
-  .tasks-content .column :global(ul li:first-child),
-  .benefits-content .column :global(ul li:first-child) {
-    margin-top: 0;
-  }
-
-  .tasks-content .column :global(ul:first-child),
-  .benefits-content .column :global(ul:first-child) {
-    margin-top: 0;
-  }
-
-  .tasks-content .column :global(ul:last-child),
-  .benefits-content .column :global(ul:last-child) {
-    margin-bottom: 0;
-  }
-
-  .tasks-content .column :global(p:first-child),
-  .benefits-content .column :global(p:first-child) {
-    margin-top: 0;
-  }
-
-  .tasks-content .column :global(p:last-child),
-  .benefits-content .column :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  /* CTA Button styles */
-  .benefits-content .column :global(.cta__button) {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.8rem 2rem;
-    background-color: var(--colorBlack);
-    color: var(--colorWhite);
-    text-decoration: none;
-    font-family: "AgrandirWide", sans-serif;
-    font-weight: 700;
-    font-size: var(--fontSize14);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    border-radius: var(--borderRadius);
-    transition: background-color 0.2s ease;
-  }
-
-  .benefits-content .column :global(.cta__button:hover) {
-    background-color: var(--colorDarkGray);
-  }
-</style>
