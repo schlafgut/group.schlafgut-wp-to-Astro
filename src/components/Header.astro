@@ -1,7 +1,8 @@
 ---
 import Logo from './Logo.astro';
 import Button from './Button.astro';
-import LanguageSwitcher from './LanguageSwitcher.astro';
+// LanguageSwitcher deaktiviert - nur DE aktiv (2026-01-11)
+// import LanguageSwitcher from './LanguageSwitcher.astro';
 import Navigation from './Navigation.astro';
 import { getLangFromUrl } from '../i18n/utils';
 import { ui } from '../i18n/navigation';
@@ -20,7 +21,7 @@ const t = ui[lang];
   <div class="header__top">
     <div class="innerwrapper smaller">
       <div class="header__left">
-        <LanguageSwitcher />
+        {/* LanguageSwitcher deaktiviert - nur DE aktiv */}
         <a href="https://business.schlafgut.com/account/login" target="_blank" class="b2b-link">
           {t.b2bShop}
         </a>
@@ -36,7 +37,7 @@ const t = ui[lang];
         </Button>
       </div>
 
-      <LanguageSwitcher class="only__mobile" />
+      {/* LanguageSwitcher mobile deaktiviert - nur DE aktiv */}
 
       <button class="burger" aria-label="Menu" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
