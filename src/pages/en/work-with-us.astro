@@ -1,0 +1,98 @@
+---
+/**
+ * Work with us (English)
+ * Section order: HeroText > ThreeImages > ColumnsWithHeadline > QuoteOnBackground > ThreeImages > Spacer x2 > ColumnsWithHeadline > Spacer > BigNumbers > Spacer x2 > ImageGrid > GridBlocks > TeaserBlocks > FullBleedBlocks
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroText from '../../components/sections/HeroText.astro';
+import ThreeImages from '../../components/sections/ThreeImages.astro';
+import ColumnsWithHeadline from '../../components/sections/ColumnsWithHeadline.astro';
+import QuoteOnBackground from '../../components/sections/QuoteOnBackground.astro';
+import Spacer from '../../components/sections/Spacer.astro';
+import BigNumbers from '../../components/sections/BigNumbers.astro';
+import ImageGrid from '../../components/sections/ImageGrid.astro';
+import GridBlocks from '../../components/sections/GridBlocks.astro';
+import GridBlock from '../../components/sections/GridBlock.astro';
+import TeaserBlocks from '../../components/sections/TeaserBlocks.astro';
+import Teaser from '../../components/sections/Teaser.astro';
+import FullBleedBlocks from '../../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../../components/sections/FullBleedBlock.astro';
+import { beiUnsArbeitenContent } from '../../i18n/content/bei-uns-arbeiten';
+
+const content = beiUnsArbeitenContent.en;
+---
+
+<BaseLayout
+  title={content.meta.title}
+  description={content.meta.description}
+>
+  <HeroText>
+    <h1 set:html={content.heroText.title} />
+    <p>{content.heroText.paragraph}</p>
+  </HeroText>
+
+  <ThreeImages images={content.threeImagesTop} />
+
+  <ColumnsWithHeadline
+    background={content.columnsWithHeadlineTop.background}
+    lines={content.columnsWithHeadlineTop.lines}
+  />
+
+  <QuoteOnBackground
+    quote={content.quoteOnBackground.quote}
+    author={content.quoteOnBackground.author}
+  />
+
+  <ThreeImages images={content.threeImagesValues} />
+
+  <Spacer size="large" />
+  <Spacer size="large" />
+
+  <ColumnsWithHeadline
+    background={content.columnsWorkLife.background}
+    lines={content.columnsWorkLife.lines}
+  />
+
+  <Spacer size="large" />
+
+  <BigNumbers numbers={content.bigNumbers} />
+
+  <Spacer size="large" />
+  <Spacer size="large" />
+
+  <ImageGrid items={content.imageGrid} />
+
+  <GridBlocks variant="fullwidth">
+    <GridBlock
+      variant={content.gridBlock.variant}
+      headline={content.gridBlock.headline}
+      position={content.gridBlock.position}
+      color={content.gridBlock.color}
+      title={content.gridBlock.title}
+      link={content.gridBlock.link}
+      video={content.gridBlock.video}
+    />
+  </GridBlocks>
+
+  <TeaserBlocks>
+    {content.teasers.map((teaser) => (
+      <Teaser
+        href={teaser.href}
+        target={teaser.target}
+        kicker={teaser.kicker}
+        title={teaser.title}
+        image={teaser.image}
+      />
+    ))}
+  </TeaserBlocks>
+
+  <FullBleedBlocks>
+    {content.fullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        title={block.title}
+        image={block.image}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>
