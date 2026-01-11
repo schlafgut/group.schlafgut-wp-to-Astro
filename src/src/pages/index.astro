@@ -1,13 +1,103 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import TextCentered from '../components/sections/TextCentered.astro';
+import GridBlocks from '../components/sections/GridBlocks.astro';
+import GridBlock from '../components/sections/GridBlock.astro';
+import Spacer from '../components/sections/Spacer.astro';
+import TeaserBlocks from '../components/sections/TeaserBlocks.astro';
+import Teaser from '../components/sections/Teaser.astro';
+import FullBleedBlocks from '../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../components/sections/FullBleedBlock.astro';
+import { homepageContent } from '../i18n/content/homepage';
+
+const content = homepageContent.de;
 ---
 
 <BaseLayout
-  title="schlafgut | Spannbettlaken und Bettwäsche"
-  description="schlafgut produziert umweltfreundliche und kreativ gestaltete Textilien und Accessoires für das Schlafzimmer - in stolzer Familientradition seit 1952."
+  title={content.meta.title}
+  description={content.meta.description}
 >
-  <main>
-    <h1>schlafgut</h1>
-    <p>Startseite (DE)</p>
-  </main>
+  {content.hero && (
+    <Hero
+      title={content.hero.title}
+      image={content.hero.image}
+    />
+  )}
+
+  {content.textCentered && content.textCentered[0] && (
+    <TextCentered>
+      <p>{content.textCentered[0]}</p>
+    </TextCentered>
+  )}
+
+  {content.gridBlocksSections && content.gridBlocksSections[0] && (
+    <GridBlocks variant={content.gridBlocksSections[0].variant}>
+      {content.gridBlocksSections[0].blocks.map((block) => (
+        <GridBlock
+          variant={block.variant}
+          headline={block.headline}
+          position={block.position}
+          color={block.color}
+          kicker={block.kicker}
+          title={block.title}
+          link={block.link}
+          image={block.image}
+          video={block.video}
+        />
+      ))}
+    </GridBlocks>
+  )}
+
+  {content.textCentered && content.textCentered[1] && (
+    <TextCentered>
+      <p>{content.textCentered[1]}</p>
+    </TextCentered>
+  )}
+
+  {content.gridBlocksSections && content.gridBlocksSections[1] && (
+    <GridBlocks variant={content.gridBlocksSections[1].variant}>
+      {content.gridBlocksSections[1].blocks.map((block) => (
+        <GridBlock
+          variant={block.variant}
+          headline={block.headline}
+          position={block.position}
+          color={block.color}
+          kicker={block.kicker}
+          title={block.title}
+          link={block.link}
+          image={block.image}
+          video={block.video}
+        />
+      ))}
+    </GridBlocks>
+  )}
+
+  <Spacer size="large" />
+
+  {content.teasers && (
+    <TeaserBlocks>
+      {content.teasers.map((teaser) => (
+        <Teaser
+          href={teaser.href}
+          target={teaser.target}
+          kicker={teaser.kicker}
+          title={teaser.title}
+          image={teaser.image}
+        />
+      ))}
+    </TeaserBlocks>
+  )}
+
+  {content.fullBleedBlocks && content.fullBleedBlocks.length > 0 && (
+    <FullBleedBlocks>
+      {content.fullBleedBlocks.map((block) => (
+        <FullBleedBlock
+          href={block.href}
+          title={block.title}
+          image={block.image}
+        />
+      ))}
+    </FullBleedBlocks>
+  )}
 </BaseLayout>
