@@ -150,3 +150,53 @@ button {
   -webkit-appearance: none;
   border-radius: 0;
 }
+
+/* Global heading styles */
+h1 {
+  font-size: var(--fontSize52);
+  line-height: 1.15;
+  font-weight: 900;
+  font-family: "AgrandirWide", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--fontSize24);
+    line-height: 1.125;
+  }
+}
+
+h2 {
+  font-size: var(--fontSize42);
+  line-height: 1.095;
+  font-weight: 900;
+  font-family: "AgrandirWide", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: var(--fontSize20);
+  }
+}
+
+h3 {
+  font-family: "PlantinMTPro", serif;
+  font-weight: 300;
+  font-size: var(--fontSize24);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  h3 {
+    font-size: var(--fontSize17);
+    line-height: 1.44;
+  }
+}
