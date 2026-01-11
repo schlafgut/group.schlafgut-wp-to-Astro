@@ -1,9 +1,18 @@
 import { config, collection, fields } from '@keystatic/core';
 
 export default config({
-  storage: {
-    kind: 'local',
-  },
+  storage: import.meta.env.DEV
+    ? { kind: 'local' }
+    : {
+        kind: 'github',
+        repo: 'schlafgut/group.schlafgut',
+        branchPrefix: 'cms/',
+      },
+  cloud: import.meta.env.DEV
+    ? undefined
+    : {
+        project: 'schlafgut/group-schlafgut',
+      },
   ui: {
     brand: {
       name: 'schlafgut CMS',
