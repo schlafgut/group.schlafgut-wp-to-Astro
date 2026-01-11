@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+import { getLangFromUrl, getHreflangs, getLangHtmlAttr } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = '' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const langHtml = getLangHtmlAttr(lang);
+const hreflangs = getHreflangs(Astro.url.pathname);
+---
+
+<!doctype html>
+<html dir="ltr" lang={langHtml}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+
+    {hreflangs.map(({ lang, href }) => (
+      <link rel="alternate" href={href} hreflang={lang} />
+    ))}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
