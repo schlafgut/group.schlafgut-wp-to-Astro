@@ -1,0 +1,62 @@
+---
+interface Props {
+  quote: string;
+  class?: string;
+}
+
+const { quote, class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__interview-quote', 'default', className]}>
+  <div class="innerwrapper">
+    <div class="quote">
+      <p set:html={quote} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section__interview-quote .innerwrapper {
+    padding-top: 5.4rem;
+    padding-bottom: 7.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__interview-quote .innerwrapper {
+      padding-top: 3.2rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  .section__interview-quote .innerwrapper .quote {
+    font-size: var(--fontSize80);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0.05em;
+    text-align: left;
+    text-transform: uppercase;
+    width: calc(100% + 1.2rem + 1.2rem);
+    margin-left: -1.2rem;
+    margin-right: -1.2rem;
+    font-family: "AgrandirWide", sans-serif;
+    font-weight: 900;
+  }
+
+  @media (max-width: 768px) {
+    .section__interview-quote .innerwrapper .quote {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      font-size: var(--fontSize30);
+      line-height: 1.19;
+    }
+  }
+
+  .section__interview-quote .innerwrapper .quote p:first-child {
+    margin-top: 0;
+  }
+
+  .section__interview-quote .innerwrapper .quote p:last-child {
+    margin-bottom: 0;
+  }
+</style>

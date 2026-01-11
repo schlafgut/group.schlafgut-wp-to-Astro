@@ -1,0 +1,171 @@
+---
+import Image from '../Image.astro';
+
+interface Props {
+  quote: string;
+  author: {
+    name: string;
+    title?: string;
+    image?: {
+      src: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    link?: {
+      href: string;
+      label: string;
+    };
+  };
+  class?: string;
+}
+
+const { quote, author, class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__quote-on-background', 'default', className]}>
+  <div class="innerwrapper">
+    <div class="quote">
+      <p set:html={quote} />
+    </div>
+    <div class="author">
+      {author.image && (
+        <div class="image">
+          <Image
+            src={author.image.src}
+            alt={author.image.alt || author.name}
+            width={author.image.width}
+            height={author.image.height}
+          />
+        </div>
+      )}
+      <span class="name">{author.name}</span>
+      {author.title && <p set:html={author.title} />}
+      {author.link && (
+        <p>
+          <a href={author.link.href} class="cta__link">{author.link.label}</a>
+        </p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section__quote-on-background {
+    background-color: var(--colorYellow);
+  }
+
+  @media (max-width: 768px) {
+    .section__quote-on-background {
+      --additionalSpacingTop: 3rem;
+    }
+  }
+
+  .section__quote-on-background .innerwrapper {
+    padding-top: 8.4rem;
+    padding-bottom: 8.4rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__quote-on-background .innerwrapper {
+      padding-top: 1.3rem;
+      padding-bottom: 2rem;
+    }
+  }
+
+  .section__quote-on-background .innerwrapper .quote {
+    font-size: var(--fontSize120);
+    font-family: "AgrandirWide", sans-serif;
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-transform: uppercase;
+    width: calc(100% + var(--sideSpacing) + var(--sideSpacing));
+    margin-left: calc(var(--sideSpacing) * -1);
+    margin-right: calc(var(--sideSpacing) * -1);
+    margin-bottom: 7.6rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__quote-on-background .innerwrapper .quote {
+      font-size: var(--fontSize39);
+      text-align: left;
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      line-height: 1.08;
+      margin-bottom: 10.6rem;
+    }
+  }
+
+  .section__quote-on-background .innerwrapper .quote p:first-child {
+    margin-top: 0;
+  }
+
+  .section__quote-on-background .innerwrapper .quote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .section__quote-on-background .innerwrapper .author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "PlantinMTPro", serif;
+    font-size: var(--fontSize24);
+    font-weight: 300;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 768px) {
+    .section__quote-on-background .innerwrapper .author {
+      align-items: flex-start;
+      font-size: var(--fontSize16);
+      text-align: left;
+    }
+  }
+
+  .section__quote-on-background .innerwrapper .author .image {
+    width: 9.1rem;
+    margin: 0 auto 1.4rem auto;
+  }
+
+  @media (max-width: 768px) {
+    .section__quote-on-background .innerwrapper .author .image {
+      width: 5.5rem;
+      margin: 0 auto 0.7rem 0;
+    }
+  }
+
+  .section__quote-on-background .innerwrapper .author .image :global(img) {
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+  }
+
+  .section__quote-on-background .innerwrapper .author .name {
+    font-family: "AgrandirWide", sans-serif;
+    font-size: var(--fontSize18);
+    font-weight: 900;
+    line-height: 1.333;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .section__quote-on-background .innerwrapper .author .name {
+      font-size: var(--fontSize14);
+      margin-bottom: 0.2rem;
+    }
+  }
+
+  .section__quote-on-background .innerwrapper .author p {
+    margin: 0.5em 0;
+  }
+
+  .section__quote-on-background .innerwrapper .author .name + p {
+    margin-top: 0.25em;
+  }
+</style>
