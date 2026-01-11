@@ -5,7 +5,6 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroTextJobs from '../../components/sections/HeroTextJobs.astro';
-import ColumnsWithHeadline from '../../components/sections/ColumnsWithHeadline.astro';
 import GridBlocks from '../../components/sections/GridBlocks.astro';
 import GridBlock from '../../components/sections/GridBlock.astro';
 import FullBleedBlocks from '../../components/sections/FullBleedBlocks.astro';
@@ -35,12 +34,20 @@ const employmentTypeLabels: Record<string, string> = {
 };
 
 // Parse requirements and benefits from YAML string to HTML
+function parseMarkdown(text: string): string {
+  // Convert **bold** to <strong>
+  return text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+}
+
 function parseListContent(content: string | undefined): string {
   if (!content) return '';
   return '<ul>' + content
     .split('\n')
     .filter(line => line.trim().startsWith('-'))
-    .map(line => `<li>${line.trim().slice(1).trim()}</li>`)
+    .map(line => {
+      const text = line.trim().slice(1).trim();
+      return `<li>${parseMarkdown(text)}</li>`;
+    })
     .join('') + '</ul>';
 }
 
@@ -81,21 +88,7 @@ const sharedFullBleedBlocks = [
     subtitle={`${employmentTypeLabels[job.data.employmentType]}, ${job.data.location}`}
   />
 
-  <ColumnsWithHeadline
-    background="beige"
-    lines={[
-      {
-        headline: 'Deine Aufgaben',
-        content: '',
-      },
-      {
-        headline: 'Was bringst du mit?',
-        content: requirementsHtml,
-      },
-    ]}
-  />
-
-  <!-- Tasks content from Markdoc body -->
+  <!-- Tasks and Requirements -->
   <section class="section__columns-with-headline tasks-content" data-background="beige">
     <div class="innerwrapper smaller">
       <div class="column__line">
@@ -117,16 +110,22 @@ const sharedFullBleedBlocks = [
     </div>
   </section>
 
-  <ColumnsWithHeadline
-    background="yellow"
-    lines={[{
-      headline: 'Warum wir?',
-      content: `${benefitsHtml}
-<p>Interesse? Dann bewirb Dich und sende deine Unterlagen an:</p>
-<p><a href="mailto:${job.data.contactEmail}">${job.data.contactEmail}</a></p>
-<p><a href="mailto:${job.data.contactEmail}" class="cta__button">jetzt bewerben</a></p>`,
-    }]}
-  />
+  <!-- Benefits Section -->
+  <section class="section__columns-with-headline benefits-content" data-background="yellow">
+    <div class="innerwrapper smaller">
+      <div class="column__line">
+        <div class="column">
+          <h2>Warum wir?</h2>
+        </div>
+        <div class="column">
+          <Fragment set:html={benefitsHtml} />
+          <p>Interesse? Dann bewirb Dich und sende deine Unterlagen an:</p>
+          <p><a href={`mailto:${job.data.contactEmail}`}>{job.data.contactEmail}</a></p>
+          <p><a href={`mailto:${job.data.contactEmail}`} class="cta__button">jetzt bewerben</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <GridBlocks variant="fullwidth">
     <GridBlock
@@ -159,11 +158,22 @@ const sharedFullBleedBlocks = [
 </BaseLayout>
 
 <style>
+  /* Shared styles for content sections */
+  .tasks-content,
+  .benefits-content {
+    padding: 0;
+  }
+
   .tasks-content {
     background-color: var(--colorBeigeLight);
   }
 
-  .tasks-content .innerwrapper {
+  .benefits-content {
+    background-color: var(--colorYellow);
+  }
+
+  .tasks-content .innerwrapper,
+  .benefits-content .innerwrapper {
     display: flex;
     flex-direction: column;
     gap: 8.3rem 0;
@@ -172,14 +182,16 @@ const sharedFullBleedBlocks = [
   }
 
   @media (max-width: 768px) {
-    .tasks-content .innerwrapper {
+    .tasks-content .innerwrapper,
+    .benefits-content .innerwrapper {
       gap: 4.3rem 0;
       padding-top: 4.7rem;
       padding-bottom: 4.7rem;
     }
   }
 
-  .tasks-content .column__line {
+  .tasks-content .column__line,
+  .benefits-content .column__line {
     display: grid;
     grid-template-columns: 0.76fr 1fr;
     gap: 0 13.4rem;
@@ -187,13 +199,15 @@ const sharedFullBleedBlocks = [
   }
 
   @media (max-width: 768px) {
-    .tasks-content .column__line {
+    .tasks-content .column__line,
+    .benefits-content .column__line {
       grid-template-columns: 100%;
       gap: 1.9rem 0;
     }
   }
 
-  .tasks-content .column {
+  .tasks-content .column,
+  .benefits-content .column {
     font-family: "PlantinMTPro", serif;
     font-size: var(--fontSize24);
     font-weight: 300;
@@ -203,13 +217,15 @@ const sharedFullBleedBlocks = [
   }
 
   @media (max-width: 768px) {
-    .tasks-content .column {
+    .tasks-content .column,
+    .benefits-content .column {
       font-size: var(--fontSize17);
       line-height: 1.44;
     }
   }
 
-  .tasks-content .column h2 {
+  .tasks-content .column h2,
+  .benefits-content .column h2 {
     margin: 0;
     font-family: "AgrandirWide", sans-serif;
     font-weight: 900;
@@ -220,36 +236,65 @@ const sharedFullBleedBlocks = [
   }
 
   @media (max-width: 768px) {
-    .tasks-content .column h2 {
+    .tasks-content .column h2,
+    .benefits-content .column h2 {
       font-size: var(--fontSize17);
     }
   }
 
-  .tasks-content .column :global(ul) {
+  .tasks-content .column :global(ul),
+  .benefits-content .column :global(ul) {
     padding-left: 0.7em;
   }
 
-  .tasks-content .column :global(ul li) {
+  .tasks-content .column :global(ul li),
+  .benefits-content .column :global(ul li) {
     margin: 0.45em 0;
   }
 
-  .tasks-content .column :global(ul li:first-child) {
+  .tasks-content .column :global(ul li:first-child),
+  .benefits-content .column :global(ul li:first-child) {
     margin-top: 0;
   }
 
-  .tasks-content .column :global(ul:first-child) {
+  .tasks-content .column :global(ul:first-child),
+  .benefits-content .column :global(ul:first-child) {
     margin-top: 0;
   }
 
-  .tasks-content .column :global(ul:last-child) {
+  .tasks-content .column :global(ul:last-child),
+  .benefits-content .column :global(ul:last-child) {
     margin-bottom: 0;
   }
 
-  .tasks-content .column :global(p:first-child) {
+  .tasks-content .column :global(p:first-child),
+  .benefits-content .column :global(p:first-child) {
     margin-top: 0;
   }
 
-  .tasks-content .column :global(p:last-child) {
+  .tasks-content .column :global(p:last-child),
+  .benefits-content .column :global(p:last-child) {
     margin-bottom: 0;
+  }
+
+  /* CTA Button styles */
+  .benefits-content .column :global(.cta__button) {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.8rem 2rem;
+    background-color: var(--colorBlack);
+    color: var(--colorWhite);
+    text-decoration: none;
+    font-family: "AgrandirWide", sans-serif;
+    font-weight: 700;
+    font-size: var(--fontSize14);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: var(--borderRadius);
+    transition: background-color 0.2s ease;
+  }
+
+  .benefits-content .column :global(.cta__button:hover) {
+    background-color: var(--colorDarkGray);
   }
 </style>
