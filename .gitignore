@@ -20,3 +20,5 @@ Thumbs.db
 
 # GSD / Planning (SICHERSTELLEN DASS DIESE NICHT IGNORIERT WERDEN)
 # .planning/  <-- Diese Zeile darf hier NICHT stehen!
+# Local Netlify folder
+.netlify
