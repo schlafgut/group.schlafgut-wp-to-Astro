@@ -1,0 +1,119 @@
+---
+import { getLangFromUrl, languages, getLocalizedUrl, type Lang } from '../i18n/utils';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname;
+
+// Get path without language prefix for generating alternate URLs
+const pathWithoutLang = currentPath.replace(/^\/(en|nl)\//, '/').replace(/^\//, '');
+
+const otherLanguages = (Object.keys(languages) as Lang[]).filter(lang => lang !== currentLang);
+---
+
+<div class:list={['language_switcher_holder', className]}>
+  <span>{languages[currentLang]}</span>
+  <ul class="language_switcher">
+    <li class:list={['lang-item', `lang-item-${currentLang}`, 'current-lang']}>
+      <a
+        lang={currentLang === 'de' ? 'de-DE' : currentLang}
+        hreflang={currentLang === 'de' ? 'de-DE' : currentLang}
+        href={getLocalizedUrl(pathWithoutLang, currentLang)}
+        aria-current="true"
+      >
+        {languages[currentLang]}
+      </a>
+    </li>
+    {otherLanguages.map((lang) => (
+      <li class:list={['lang-item', `lang-item-${lang}`]}>
+        <a
+          lang={lang === 'de' ? 'de-DE' : lang}
+          hreflang={lang === 'de' ? 'de-DE' : lang}
+          href={getLocalizedUrl(pathWithoutLang, lang)}
+        >
+          {languages[lang]}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .language_switcher_holder {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .language_switcher_holder > span {
+    font-size: var(--fontSize12);
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-weight: 500;
+  }
+
+  .language_switcher {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0.5em 0;
+    background-color: var(--colorWhite);
+    min-width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5em);
+    transition: opacity 200ms ease-out, transform 200ms ease-out, visibility 200ms;
+    z-index: 100;
+  }
+
+  .language_switcher_holder:hover .language_switcher {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .language_switcher li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .language_switcher a {
+    display: block;
+    padding: 0.3em 0;
+    font-size: var(--fontSize12);
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-weight: 500;
+    color: var(--colorBlack);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .language_switcher a:hover {
+    color: var(--colorBlue);
+  }
+
+  .language_switcher .current-lang a {
+    color: var(--colorGrey);
+  }
+
+  /* Mobile variant */
+  .language_switcher_holder.only__mobile {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .language_switcher_holder:not(.only__mobile) {
+      display: none;
+    }
+
+    .language_switcher_holder.only__mobile {
+      display: block;
+    }
+  }
+</style>
