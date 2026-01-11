@@ -1,0 +1,114 @@
+---
+/**
+ * Discover products (English)
+ * Section order: HeroText > HeroImage > TextCentered > TextImage > FullwidthImage > ColumnsWithHeadline > FullwidthImage > ColumnsWithHeadline > ThreeImages > ColumnsWithHeadline > FullwidthImage > TextImage (fullBleed) > GridBlocks > FullBleedBlocks
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroText from '../../components/sections/HeroText.astro';
+import TextCentered from '../../components/sections/TextCentered.astro';
+import TextImage from '../../components/sections/TextImage.astro';
+import FullwidthImage from '../../components/sections/FullwidthImage.astro';
+import ColumnsWithHeadline from '../../components/sections/ColumnsWithHeadline.astro';
+import ThreeImages from '../../components/sections/ThreeImages.astro';
+import Spacer from '../../components/sections/Spacer.astro';
+import GridBlocks from '../../components/sections/GridBlocks.astro';
+import GridBlock from '../../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../../components/sections/FullBleedBlock.astro';
+import { produkteEntdeckenContent } from '../../i18n/content/produkte-entdecken';
+
+const content = produkteEntdeckenContent.en;
+---
+
+<BaseLayout
+  title={content.meta.title}
+  description={content.meta.description}
+>
+  <HeroText>
+    <h1 set:html={content.heroText.title} />
+    <p set:html={content.heroText.paragraph} />
+  </HeroText>
+
+  <FullwidthImage image={content.heroImage.image} />
+
+  <TextCentered>
+    <Fragment set:html={content.textCentered} />
+  </TextCentered>
+
+  <TextImage
+    reversed={content.textImageSections[0].reversed}
+    content={content.textImageSections[0].content}
+    video={content.textImageSections[0].video}
+  />
+
+  <FullwidthImage video={content.fullwidthImages[0].video} />
+
+  {content.columnsWithHeadline[0] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[0].background}
+      lines={content.columnsWithHeadline[0].lines}
+    />
+  )}
+
+  <FullwidthImage video={content.fullwidthImages[1].video} />
+
+  {content.columnsWithHeadline[1] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[1].background}
+      lines={content.columnsWithHeadline[1].lines}
+    />
+  )}
+
+  <ThreeImages images={content.threeImages} />
+
+  {content.columnsWithHeadline[2] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[2].background}
+      lines={content.columnsWithHeadline[2].lines}
+    />
+  )}
+
+  <FullwidthImage image={content.fullwidthImages[2].image} />
+
+  <TextImage
+    reversed={content.textImageSections[1].reversed}
+    fullBleed={content.textImageSections[1].fullBleed}
+    background={content.textImageSections[1].background}
+    content={content.textImageSections[1].content}
+    video={content.textImageSections[1].video}
+  />
+
+  <Spacer size="large" />
+
+  <GridBlocks variant={content.gridBlocks.variant}>
+    {content.gridBlocks.blocks.map((block) => (
+      <GridBlock
+        variant={block.variant}
+        headline={block.headline}
+        position={block.position}
+        color={block.color}
+        kicker={block.kicker}
+        title={block.title}
+        link={block.link}
+        image={block.image}
+        video={block.video}
+      />
+    ))}
+  </GridBlocks>
+
+  <Spacer size="xlarge" />
+
+  <FullBleedBlocks>
+    {content.fullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        style={block.variant}
+        title={block.title}
+        quote={block.quote}
+        author={block.author}
+        linkLabel={block.linkLabel}
+        image={block.image}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>
