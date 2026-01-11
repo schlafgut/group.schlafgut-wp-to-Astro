@@ -88,7 +88,10 @@
   - Storage auf `kind: 'cloud'` für Production umgestellt
   - Keystatic Cloud Project: `schlafgut-group/group-schlafgut`
   - Dev-Weiche: `kind: 'local'` für lokale Entwicklung ohne Login
-  - Astro `output: 'hybrid'` für SSR + Static Mix
+- **Astro 5 Server Mode** (`ff6eec4`):
+  - Astro `output: 'server'` für Keystatic API-Routen (SSR)
+  - `export const prerender = true` in allen Seiten für statische Generierung
+  - Ermöglicht CMS-Login auf Netlify bei schnellen statischen Seiten
   - **CMS ist jetzt live-ready für Netlify**
 
 ---
@@ -113,6 +116,7 @@ None
 - **Keystatic CMS eingerichtet** - Admin UI unter /keystatic, Jobs Collection bereit
 - **Phase 3.1 abgeschlossen** - 5 Jobs migriert, dynamische Seiten, CMS-Integration komplett
 - **Keystatic Cloud Mode live-ready** - Production: cloud storage, Dev: local storage ohne Login
+- **Astro 5 Server Mode** - `output: 'server'` + `prerender: true` für CMS-API bei statischen Seiten
 
 ---
 *Last updated: 2026-01-12*
