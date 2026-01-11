@@ -1,0 +1,27 @@
+{
+  "project": {
+    "name": "schlafgut-astro",
+    "version": "0.1.0"
+  },
+  "workflow": {
+    "mode": "yolo",
+    "depth": "quick",
+    "autoApprove": true
+  },
+  "planning": {
+    "phases": {
+      "min": 3,
+      "max": 5
+    },
+    "tasksPerPlan": {
+      "min": 2,
+      "max": 3
+    }
+  },
+  "paths": {
+    "planning": ".planning",
+    "codebase": ".planning/codebase",
+    "roadmap": ".planning/ROADMAP.md",
+    "state": ".planning/STATE.md"
+  }
+}
