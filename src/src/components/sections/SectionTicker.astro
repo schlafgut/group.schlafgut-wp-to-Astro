@@ -1,0 +1,57 @@
+---
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className = '' } = Astro.props;
+---
+
+<div class:list={['section__ticker', className]}>
+  <div class="ticker">
+    <span><strong>{text}</strong></span>
+    <span><strong>{text}</strong></span>
+    <span><strong>{text}</strong></span>
+    <span><strong>{text}</strong></span>
+    <span><strong>{text}</strong></span>
+    <span><strong>{text}</strong></span>
+    <span><strong>{text}</strong></span>
+  </div>
+</div>
+
+<style>
+  .section__ticker {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .section__ticker .ticker {
+    display: inline-block;
+    animation: ticker 15s linear infinite;
+  }
+
+  .section__ticker .ticker span {
+    display: inline-block;
+    padding-right: 4rem;
+    font-family: var(--fontFamilyAgrandirWide);
+    font-size: var(--fontSize18);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .section__ticker .ticker span {
+      font-size: var(--fontSize14);
+      padding-right: 2rem;
+    }
+  }
+
+  @keyframes ticker {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>
