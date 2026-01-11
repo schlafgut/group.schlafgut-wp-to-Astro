@@ -1,0 +1,49 @@
+---
+/**
+ * Aktuelle Stellen (German)
+ * Jobs listing page
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroText from '../components/sections/HeroText.astro';
+import JobListing from '../components/sections/JobListing.astro';
+import GridBlocks from '../components/sections/GridBlocks.astro';
+import GridBlock from '../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../components/sections/FullBleedBlock.astro';
+import { aktuelleStellenContent } from '../i18n/content/aktuelle-stellen';
+
+const content = aktuelleStellenContent.de;
+---
+
+<BaseLayout
+  title={content.meta.title}
+  description={content.meta.description}
+>
+  <HeroText>
+    <h1 set:html={content.heroText.title} />
+  </HeroText>
+
+  <JobListing jobs={content.jobs} />
+
+  <GridBlocks variant="fullwidth">
+    <GridBlock
+      variant={content.gridBlock.variant}
+      headline={content.gridBlock.headline}
+      position={content.gridBlock.position}
+      color={content.gridBlock.color}
+      title={content.gridBlock.title}
+      link={content.gridBlock.link}
+      image={content.gridBlock.image}
+    />
+  </GridBlocks>
+
+  <FullBleedBlocks>
+    {content.fullBleedBlocks.map((block) => (
+      <FullBleedBlock
+        href={block.href}
+        title={block.title}
+        image={block.image}
+      />
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>

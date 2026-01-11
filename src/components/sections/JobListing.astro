@@ -1,0 +1,82 @@
+---
+interface Job {
+  href: string;
+  title: string;
+  when: string;
+}
+
+interface Props {
+  jobs: Job[];
+  class?: string;
+}
+
+const { jobs, class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__jobs', 'default', className]}>
+  <div class="innerwrapper">
+    {jobs.map((job) => (
+      <a href={job.href} class="single__job">
+        <h3 set:html={job.title} />
+        <span class="when">{job.when}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section__jobs .innerwrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__jobs .innerwrapper {
+      grid-template-columns: 100%;
+      padding-top: 1rem;
+      gap: 1.3rem;
+    }
+  }
+
+  .single__job {
+    background-color: var(--colorYellow);
+    display: flex;
+    border-radius: var(--borderRadius);
+    min-height: 24.2rem;
+    flex-direction: column;
+    padding: 1rem 1.6rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @media (max-width: 768px) {
+    .single__job {
+      padding: 0.9rem 1.2rem;
+      min-height: 14.5rem;
+    }
+  }
+
+  .single__job h3,
+  .single__job .when {
+    margin: 0;
+    font-family: "AgrandirWide", sans-serif;
+    font-size: var(--fontSize30);
+    font-weight: 900;
+    line-height: 1.166;
+    letter-spacing: 0.01em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .single__job h3,
+    .single__job .when {
+      font-size: var(--fontSize18);
+    }
+  }
+
+  .single__job .when {
+    margin-top: auto;
+  }
+</style>
