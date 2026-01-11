@@ -10,6 +10,9 @@ interface Props {
     width?: number;
     height?: number;
     srcset?: string;
+  } | {
+    desktop: { src: string; alt?: string; width?: number; height?: number; srcset?: string };
+    mobile: { src: string; alt?: string; width?: number; height?: number };
   };
   video?: {
     desktop?: { src: string; width?: number; height?: number };
@@ -69,13 +72,33 @@ const {
           )}
         </>
       ) : image ? (
-        <Image
-          src={image.src}
-          alt={image.alt || ''}
-          width={image.width}
-          height={image.height}
-          srcset={image.srcset}
-        />
+        'desktop' in image ? (
+          <>
+            <Image
+              src={image.desktop.src}
+              alt={image.desktop.alt || ''}
+              width={image.desktop.width}
+              height={image.desktop.height}
+              srcset={image.desktop.srcset}
+              class="only__desktop"
+            />
+            <Image
+              src={image.mobile.src}
+              alt={image.mobile.alt || ''}
+              width={image.mobile.width}
+              height={image.mobile.height}
+              class="only__mobile"
+            />
+          </>
+        ) : (
+          <Image
+            src={image.src}
+            alt={image.alt || ''}
+            width={image.width}
+            height={image.height}
+            srcset={image.srcset}
+          />
+        )
       ) : null}
     </div>
     {description && (
