@@ -1,0 +1,139 @@
+---
+/**
+ * Unsere Historie (German)
+ * Section order: HeroText > FullwidthImage > TextCentered > CenteredImage > [Spacer + ColumnsWithHeadline + Spacer + ThreeImages] x4 > Spacer > GridBlocks > Spacer > FullBleedBlocks
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroText from '../components/sections/HeroText.astro';
+import FullwidthImage from '../components/sections/FullwidthImage.astro';
+import TextCentered from '../components/sections/TextCentered.astro';
+import CenteredImage from '../components/sections/CenteredImage.astro';
+import Spacer from '../components/sections/Spacer.astro';
+import ColumnsWithHeadline from '../components/sections/ColumnsWithHeadline.astro';
+import ThreeImages from '../components/sections/ThreeImages.astro';
+import GridBlocks from '../components/sections/GridBlocks.astro';
+import GridBlock from '../components/sections/GridBlock.astro';
+import FullBleedBlocks from '../components/sections/FullBleedBlocks.astro';
+import FullBleedBlock from '../components/sections/FullBleedBlock.astro';
+import { unsereHistorieContent } from '../i18n/content/unsere-historie';
+
+const content = unsereHistorieContent.de;
+---
+
+<BaseLayout
+  title={content.meta.title}
+  description={content.meta.description}
+>
+  <HeroText>
+    <h1 set:html={content.heroText.title} />
+    <p>{content.heroText.paragraph}</p>
+  </HeroText>
+
+  <FullwidthImage video={content.fullwidthImage.video} />
+
+  <TextCentered>
+    <Fragment set:html={content.textCentered} />
+  </TextCentered>
+
+  <CenteredImage
+    image={content.centeredImage.image}
+    description={content.centeredImage.description}
+  />
+
+  <Spacer size="small" />
+
+  {content.columnsWithHeadline[0] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[0].background}
+      lines={content.columnsWithHeadline[0].lines}
+    />
+  )}
+
+  <Spacer size="small" />
+
+  {content.threeImagesSections[0] && (
+    <ThreeImages images={content.threeImagesSections[0]} />
+  )}
+
+  <Spacer size="small" />
+
+  {content.columnsWithHeadline[1] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[1].background}
+      lines={content.columnsWithHeadline[1].lines}
+    />
+  )}
+
+  <Spacer size="small" />
+
+  {content.threeImagesSections[1] && (
+    <ThreeImages images={content.threeImagesSections[1]} />
+  )}
+
+  <Spacer size="small" />
+
+  {content.columnsWithHeadline[2] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[2].background}
+      lines={content.columnsWithHeadline[2].lines}
+    />
+  )}
+
+  {content.threeImagesSections[2] && (
+    <ThreeImages images={content.threeImagesSections[2]} />
+  )}
+
+  <Spacer size="small" />
+
+  {content.columnsWithHeadline[3] && (
+    <ColumnsWithHeadline
+      background={content.columnsWithHeadline[3].background}
+      lines={content.columnsWithHeadline[3].lines}
+    />
+  )}
+
+  {content.threeImagesSections[3] && (
+    <ThreeImages images={content.threeImagesSections[3]} />
+  )}
+
+  <Spacer size="large" />
+
+  <GridBlocks variant={content.gridBlocks.variant}>
+    {content.gridBlocks.blocks.map((block) => (
+      <GridBlock
+        variant={block.variant}
+        headline={block.headline}
+        position={block.position}
+        color={block.color}
+        kicker={block.kicker}
+        title={block.title}
+        link={block.link}
+        image={block.image}
+        video={block.video}
+      />
+    ))}
+  </GridBlocks>
+
+  <Spacer size="xlarge" />
+
+  <FullBleedBlocks>
+    {content.fullBleedBlocks.map((block) => (
+      block.variant === 'style2' ? (
+        <FullBleedBlock
+          href={block.href}
+          variant={block.variant}
+          quote={block.quote}
+          author={block.author}
+          linkLabel={block.linkLabel}
+          image={block.image}
+        />
+      ) : (
+        <FullBleedBlock
+          href={block.href}
+          title={block.title}
+          image={block.image}
+        />
+      )
+    ))}
+  </FullBleedBlocks>
+</BaseLayout>

@@ -1,6 +1,6 @@
 ---
 interface Props {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
 }
 
 const { size = 'medium' } = Astro.props;
@@ -25,6 +25,10 @@ const { size = 'medium' } = Astro.props;
     height: calc(var(--sectionSpacing) * 1.5);
   }
 
+  .spacer.xlarge {
+    height: calc(var(--sectionSpacing) * 2);
+  }
+
   @media (max-width: 768px) {
     .spacer.small {
       height: calc(var(--sectionSpacing) * 0.5);
@@ -36,6 +40,10 @@ const { size = 'medium' } = Astro.props;
 
     .spacer.large {
       height: calc(var(--sectionSpacing) * 1.25);
+    }
+
+    .spacer.xlarge {
+      height: calc(var(--sectionSpacing) * 1.5);
     }
   }
 </style>

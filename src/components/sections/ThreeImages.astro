@@ -1,17 +1,22 @@
 ---
 import Image from '../Image.astro';
 
-interface ImageItem {
+interface MediaItem {
   src: string;
   alt?: string;
   width?: number;
   height?: number;
   srcset?: string;
   description?: string;
+  video?: {
+    src: string;
+    width?: number;
+    height?: number;
+  };
 }
 
 interface Props {
-  images: ImageItem[];
+  images: MediaItem[];
   background?: 'default' | 'yellow';
   class?: string;
 }
@@ -23,19 +28,31 @@ const { images, background = 'default', class: className = '' } = Astro.props;
   class:list={['section__three-images', 'default', className]}
   data-background={background}
 >
-  {images.map((img) => (
+  {images.map((item) => (
     <div class="slideInElement image">
-      <Image
-        src={img.src}
-        alt={img.alt || ''}
-        width={img.width}
-        height={img.height}
-        srcset={img.srcset}
-      />
-      {img.description && (
-        <div class="description">
-          <p set:html={img.description} />
-        </div>
+      {item.video ? (
+        <video
+          class="lazy"
+          width={item.video.width || 1080}
+          height={item.video.height || 1080}
+          autoplay
+          loop
+          muted
+          playsinline
+        >
+          <source data-src={item.video.src} type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src={item.src}
+          alt={item.alt || ''}
+          width={item.width}
+          height={item.height}
+          srcset={item.srcset}
+        />
+      )}
+      {item.description && (
+        <div class="description" set:html={item.description} />
       )}
     </div>
   ))}
@@ -65,10 +82,20 @@ const { images, background = 'default', class: className = '' } = Astro.props;
     max-width: none;
   }
 
-  .section__three-images .image :global(img) {
+  .section__three-images .image :global(img),
+  .section__three-images .image :global(video) {
     object-fit: cover;
     width: 100%;
     height: auto;
+  }
+
+  .section__three-images .image .description :global(h3) {
+    font-family: var(--fontFamilyAgrandir);
+    font-size: var(--fontSize14);
+    font-weight: 500;
+    letter-spacing: 0.21em;
+    text-transform: uppercase;
+    margin: 0 0 0.5em 0;
   }
 
   .section__three-images .image .description {
