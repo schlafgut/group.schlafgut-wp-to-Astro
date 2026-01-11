@@ -1,0 +1,22 @@
+/* Section Styles */
+
+/* Base section spacing */
+section:not(.section__hero) {
+  margin-top: var(--sectionSpacing);
+}
+
+section:not(.section__hero).no-margin {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  section:not(.section__hero) {
+    margin-top: var(--sectionSpacing);
+  }
+}
+
+/* Section max-widths */
+.section__grid-blocks.boxed .innerwrapper,
+.section__fullwidth-image .innerwrapper {
+  max-width: 1630px;
+}
