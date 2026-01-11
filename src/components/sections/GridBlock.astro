@@ -305,7 +305,7 @@ const {
     width: 0;
   }
 
-  .background_image {
+  .single__block :global(.background_image) {
     position: absolute;
     left: 0;
     top: 0;
@@ -317,7 +317,14 @@ const {
   }
 
   video.background_image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    z-index: 0;
+    border-radius: var(--borderRadius);
   }
 </style>
 
