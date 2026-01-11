@@ -1,0 +1,35 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__teaser-blocks', 'default', className]}>
+  <div class="innerwrapper">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section__teaser-blocks {
+    background-color: var(--colorYellow);
+  }
+
+  .section__teaser-blocks .innerwrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 3.6rem 0;
+    gap: 0 1.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__teaser-blocks .innerwrapper {
+      grid-template-columns: 100%;
+      padding-top: 2rem;
+      padding-bottom: 5rem;
+      gap: 1.6rem 0;
+    }
+  }
+</style>

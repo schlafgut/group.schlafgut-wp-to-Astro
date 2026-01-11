@@ -1,0 +1,25 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__full-bleed-blocks', 'default', className]}>
+  <slot />
+</section>
+
+<style>
+  .section__full-bleed-blocks {
+    --substractionalSpacingTop: calc(var(--sectionSpacing) * 2);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    .section__full-bleed-blocks {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
