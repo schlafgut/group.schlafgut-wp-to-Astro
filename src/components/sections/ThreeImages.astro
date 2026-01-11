@@ -116,8 +116,14 @@ const { images, background = 'default', class: className = '' } = Astro.props;
     }
   }
 
-  .section__three-images .image .description p {
-    max-width: 47em;
+  .section__three-images .image .description :global(p) {
+    max-width: 39em;
     margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .section__three-images .image .description :global(p) {
+      max-width: 35em;
+    }
   }
 </style>
