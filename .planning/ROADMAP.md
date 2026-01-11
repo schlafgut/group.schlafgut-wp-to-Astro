@@ -54,11 +54,17 @@
 
 **Scope**:
 - Replace jQuery interactions with Vanilla JS
-- Image optimization (WebP, responsive sizes)
+- ~~Image optimization (WebP, responsive sizes)~~ ✅ (vorgezogen)
 - Add alt texts to 475+ images
-- Lazy loading implementation
+- ~~Lazy loading implementation~~ ✅ (vorgezogen)
 - Core Web Vitals optimization (LCP < 2s, FCP < 1s)
 - Bundle size target: < 100KB
+
+**Partially completed** (Image Performance Sprint):
+- WebP-Konvertierung via Astro `<Image />` ✅
+- Native Lazy Loading ✅
+- Eager Loading für Hero-Bilder ✅
+- Retina-Support (2x densities) ✅
 
 **Research**: Yes - need to analyze which jQuery features are used
 

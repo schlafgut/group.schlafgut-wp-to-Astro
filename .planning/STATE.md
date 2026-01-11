@@ -50,6 +50,16 @@
   - Task 1: Homepage content extracted to i18n file (`e06c554`)
   - Task 2: German homepage migrated with full structure (`e06c554`)
   - Task 3: English/Dutch homepages migrated (`e06c554`)
+- **Performance Sprint: Bildoptimierung** (vorgezogen aus Phase 4):
+  - 99 Bilder nach `src/assets/images/` migriert
+  - `Image.astro` refactored mit Astro `<Image />` für native Optimierung
+  - Automatische WebP-Konvertierung (31 MB → 17.3 MB, 44% kleiner)
+  - Native Lazy Loading für alle Bilder
+  - Eager Loading für Hero-Bilder (LCP-Optimierung)
+  - `densities={[1, 2]}` für Retina-Displays
+  - 27 Videos bleiben in `public/wp-content/uploads/`
+  - Redundante Bilder aus `public/wp-content/uploads/` entfernt
+  - UAT: Alle 5 Tests bestanden ✅
 
 ---
 
@@ -65,6 +75,7 @@ None
 - 27 total section components now available for page migration
 - Homepage migrated: DE (full), NL (full, different layout), EN (minimal - original empty)
 - Homepage content stored in `src/i18n/content/homepage.ts` for maintainability
+- **Bildoptimierung abgeschlossen** - WebP, Lazy Loading, Eager Hero implementiert
 
 ---
 *Last updated: 2026-01-11*
