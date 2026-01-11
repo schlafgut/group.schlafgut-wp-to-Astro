@@ -1,9 +1,9 @@
 # Project State
 
 ## Current Status
-**Phase**: 3 - Page Migration
+**Phase**: 3.1 - Keystatic CMS Jobs
 **Milestone**: 1 - MVP Launch
-**Next Plan**: 03-PLAN.md (Content Pages Migration)
+**Next Plan**: 03.1-02-PLAN.md (Job-Seiten mit Content Collection rendern)
 
 ## Phase Progress
 
@@ -12,7 +12,7 @@
 | 1 | Foundation Setup | **completed** | 01-PLAN.md ✅ |
 | 2 | Component Library | **completed** | 01-PLAN.md ✅, 02-PLAN.md ✅ |
 | 3 | Page Migration (DE only) | **in progress** | 01-PLAN.md ✅, 02-PLAN.md ✅, 03-PLAN.md (DE only), 04-PLAN.md |
-| 3.1 | Keystatic CMS Jobs | **planned** | 03.1-01-PLAN.md, 03.1-02-PLAN.md |
+| 3.1 | Keystatic CMS Jobs | **in progress** | 03.1-01-PLAN.md ✅, 03.1-02-PLAN.md |
 | 4 | Optimization | pending | - |
 | 5 | Polish & Launch | pending | - |
 
@@ -61,6 +61,12 @@
   - 27 Videos bleiben in `public/wp-content/uploads/`
   - Redundante Bilder aus `public/wp-content/uploads/` entfernt
   - UAT: Alle 5 Tests bestanden ✅
+- **Phase 3.1 Plan 01 executed** (3 tasks completed):
+  - Task 1: Keystatic dependencies + Astro config (`69e791e`)
+  - Task 2: Keystatic config with Jobs collection (`fbe8aa5`)
+  - Task 3: Astro Content Collection for jobs (`436c3bf`)
+  - Admin UI unter /keystatic funktioniert
+  - Jobs Collection mit vollständigem Schema
 
 ---
 
@@ -81,6 +87,7 @@ None
 - Homepage migrated: DE (full), NL (full, different layout), EN (minimal - original empty)
 - Homepage content stored in `src/i18n/content/homepage.ts` for maintainability
 - **Bildoptimierung abgeschlossen** - WebP, Lazy Loading, Eager Hero implementiert
+- **Keystatic CMS eingerichtet** - Admin UI unter /keystatic, Jobs Collection bereit
 
 ---
 *Last updated: 2026-01-11*
