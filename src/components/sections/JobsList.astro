@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section class:list={['section__jobs', 'default', className]}>
+  <div class="innerwrapper">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section__jobs .innerwrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .section__jobs .innerwrapper {
+      grid-template-columns: 100%;
+      padding-top: 1rem;
+      gap: 1.3rem;
+    }
+  }
+</style>

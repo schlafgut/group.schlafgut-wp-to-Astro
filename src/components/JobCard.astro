@@ -1,0 +1,64 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  availability?: string;
+  class?: string;
+}
+
+const { href, title, availability = 'sofort', class: className = '' } = Astro.props;
+---
+
+<a href={href} class:list={['single__job', className]}>
+  <h3 set:html={title} />
+  <span class="when">{availability}</span>
+</a>
+
+<style>
+  .single__job {
+    background-color: var(--colorYellow);
+    display: flex;
+    border-radius: var(--borderRadius);
+    min-height: 24.2rem;
+    flex-direction: column;
+    padding: 1rem 1.6rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+  }
+
+  .single__job:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .single__job {
+      padding: 0.9rem 1.2rem;
+      min-height: 14.5rem;
+    }
+  }
+
+  .single__job h3,
+  .single__job .when {
+    margin: 0;
+    font-family: "AgrandirWide", sans-serif;
+    font-size: var(--fontSize30);
+    font-weight: 900;
+    line-height: 1.166;
+    letter-spacing: 0.01em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .single__job h3,
+    .single__job .when {
+      font-size: var(--fontSize18);
+    }
+  }
+
+  .single__job .when {
+    margin-top: auto;
+  }
+</style>
