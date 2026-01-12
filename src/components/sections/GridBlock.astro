@@ -47,8 +47,8 @@ const {
   data-color={color}
 >
   <div class="content">
-    {kicker && <h4 set:html={kicker} />}
-    {title && <h3 set:html={title} />}
+    {kicker && <span class="kicker" set:html={kicker} />}
+    {title && <h2 class="title" set:html={title} />}
   </div>
 
   {link && (
@@ -58,7 +58,16 @@ const {
   )}
 
   {video ? (
-    <video class="background_image lazy" width={video.width} height={video.height} autoplay loop muted playsinline>
+    <video
+      class="background_image lazy"
+      width={video.width}
+      height={video.height}
+      autoplay
+      loop
+      muted
+      playsinline
+      aria-label="Dekoratives Hintergrundvideo"
+    >
       <source data-src={video.src} type="video/mp4" />
     </video>
   ) : image ? (
@@ -131,7 +140,7 @@ const {
       padding-right: 2rem;
     }
 
-    .single__block[data-position="middle"] .content h3 {
+    .single__block[data-position="middle"] .content .title {
       margin-top: 0.8rem !important;
     }
   }
@@ -164,7 +173,8 @@ const {
     }
   }
 
-  .content h4 {
+  .content .kicker {
+    display: block;
     margin: 0;
     font-family: "Agrandir", sans-serif;
     font-style: normal;
@@ -178,23 +188,23 @@ const {
     margin-bottom: 3.4em;
   }
 
-  .content h4 br {
+  .content .kicker :global(br) {
     display: none;
   }
 
   @media (max-width: 768px) {
-    .content h4 {
+    .content .kicker {
       font-size: var(--fontSize11);
       line-height: 1.45;
       margin-bottom: 2em;
     }
 
-    .content h4 br {
+    .content .kicker :global(br) {
       display: block;
     }
   }
 
-  .content h3 {
+  .content .title {
     font-family: "PlantinMTPro", serif;
     margin: 0;
     font-weight: 300;
@@ -204,7 +214,7 @@ const {
   }
 
   @media (max-width: 768px) {
-    .content h3 {
+    .content .title {
       font-size: var(--fontSize32);
       line-height: 1.1;
       max-width: calc(100% - var(--sideSpacing) - var(--sideSpacing) - var(--sideSpacing) - var(--sideSpacing));
@@ -212,13 +222,13 @@ const {
       margin-right: auto;
     }
 
-    .content h3 br {
+    .content .title :global(br) {
       display: none;
     }
   }
 
   /* Headline font variants */
-  .single__block[data-headline="agrandir_wide"] h3 {
+  .single__block[data-headline="agrandir_wide"] .title {
     font-family: "AgrandirWide", sans-serif;
     font-size: var(--fontSize45);
     font-weight: 900;
@@ -229,34 +239,34 @@ const {
   }
 
   @media (max-width: 768px) {
-    .single__block[data-headline="agrandir_wide"] h3 {
+    .single__block[data-headline="agrandir_wide"] .title {
       font-size: var(--fontSize24);
       line-height: 1.125;
     }
   }
 
-  .single__block[data-headline="plantin"] h3 {
+  .single__block[data-headline="plantin"] .title {
     font-family: "PlantinMTPro", serif;
   }
 
   /* Wide variants with specific headline styles */
-  .single__block.wide[data-headline="plantin"] h3 {
+  .single__block.wide[data-headline="plantin"] .title {
     font-size: var(--fontSize94);
   }
 
   @media (max-width: 768px) {
-    .single__block.wide[data-headline="plantin"] h3 {
+    .single__block.wide[data-headline="plantin"] .title {
       font-size: var(--fontSize50);
     }
   }
 
-  .single__block.wide[data-headline="agrandir_wide"] h3 {
+  .single__block.wide[data-headline="agrandir_wide"] .title {
     font-size: var(--fontSize52);
     margin-top: -0.15em;
   }
 
   @media (max-width: 768px) {
-    .single__block.wide[data-headline="agrandir_wide"] h3 {
+    .single__block.wide[data-headline="agrandir_wide"] .title {
       font-size: var(--fontSize34);
       line-height: 1.176;
     }

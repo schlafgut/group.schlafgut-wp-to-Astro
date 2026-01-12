@@ -26,7 +26,7 @@ const { lines, class: className = '' } = Astro.props;
           <h3 set:html={line.question} />
           {line.video && (
             <div class="inner-video" style={line.video.style}>
-              <video class="lazy" width={line.video.width} height={line.video.height} autoplay loop muted playsinline>
+              <video class="lazy" width={line.video.width} height={line.video.height} autoplay loop muted playsinline aria-label="Interview Video">
                 <source data-src={line.video.src} type="video/mp4" />
               </video>
             </div>
