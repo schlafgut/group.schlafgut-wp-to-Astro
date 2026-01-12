@@ -24,7 +24,7 @@ const {
 
 const lang = getLangFromUrl(Astro.url);
 const langHtml = getLangHtmlAttr(lang);
-const hreflangs = getHreflangs(Astro.url.pathname);
+const hreflangs = getHreflangs(Astro.url.pathname, Astro.site);
 const currentPath = Astro.url.pathname;
 const t = ui[lang];
 ---

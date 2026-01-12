@@ -48,7 +48,7 @@
   /* Colors */
   --colorBlack: #0D0900;
   --colorWhite: #FFFFFF;
-  --colorGrey: rgba(0, 0, 0, 0.5);
+  --colorGrey: rgba(0, 0, 0, 0.65); /* WCAG AA compliant contrast (4.5:1+) */
   --colorGreyLight: rgba(0, 0, 0, 0.05);
   --colorBeigeLight: rgba(232, 227, 223, 0.3);
   --colorBeige: rgba(232, 227, 223, 0.5);

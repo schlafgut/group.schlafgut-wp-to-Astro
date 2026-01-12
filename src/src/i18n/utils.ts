@@ -22,14 +22,16 @@ export function getLocalizedUrl(path: string, lang: Lang): string {
   return `/${lang}/${cleanPath}`;
 }
 
-export function getHreflangs(currentPath: string): { lang: Lang; href: string }[] {
+export function getHreflangs(currentPath: string, siteUrl?: URL): { lang: Lang; href: string }[] {
   const cleanPath = currentPath
     .replace(/^\/(en|nl)\//, '/')
     .replace(/^\//, '');
 
+  const baseUrl = siteUrl ? siteUrl.origin : '';
+
   return Object.keys(languages).map((lang) => ({
     lang: lang as Lang,
-    href: getLocalizedUrl(cleanPath, lang as Lang),
+    href: baseUrl + getLocalizedUrl(cleanPath, lang as Lang),
   }));
 }
 

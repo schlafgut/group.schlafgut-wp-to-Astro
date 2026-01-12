@@ -39,6 +39,7 @@ const { images, background = 'default', class: className = '' } = Astro.props;
           loop
           muted
           playsinline
+          aria-label="Dekoratives Video"
         >
           <source data-src={item.video.src} type="video/mp4" />
         </video>
