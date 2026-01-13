@@ -7,9 +7,11 @@ interface NumberItem {
 interface Props {
   numbers: NumberItem[];
   class?: string;
+  /** Enable counter animation (numbers count up from 0) */
+  animate?: boolean;
 }
 
-const { numbers, class: className = "" } = Astro.props;
+const { numbers, class: className = "", animate = true } = Astro.props;
 ---
 
 <section class:list={["section__big-numbers", "default", className]}>
@@ -17,8 +19,13 @@ const { numbers, class: className = "" } = Astro.props;
     <div class="number__holder">
       {
         numbers.map((item) => (
-          <div class="single__number">
-            <span class="number">{item.number}</span>
+          <div class="single__number slide-in-element">
+            <span
+              class="number"
+              data-target={animate ? item.number : undefined}
+            >
+              {animate ? "0" : item.number}
+            </span>
             <div class="text">
               <p set:html={item.text} />
             </div>
