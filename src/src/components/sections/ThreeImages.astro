@@ -19,13 +19,15 @@ interface Props {
   images: MediaItem[];
   background?: "default" | "yellow";
   class?: string;
+  /** Enable staggered slide-in animation from right */
+  animate?: boolean;
 }
 
-const { images, background = "default", class: className = "" } = Astro.props;
+const { images, background = "default", class: className = "", animate = true } = Astro.props;
 ---
 
 <section
-  class:list={["section__three-images", "default", className]}
+  class:list={["section__three-images", "default", className, { "image-row-animate": animate }]}
   data-background={background}
 >
   {
