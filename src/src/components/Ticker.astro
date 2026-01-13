@@ -1,22 +1,24 @@
 ---
-import { getLangFromUrl, getLocalizedUrl } from '../i18n/utils';
+import { getLangFromUrl, getLocalizedUrl } from "../i18n/utils";
 
 interface Props {
   text: string;
   href?: string;
-  variant?: 'default' | 'yellow';
+  variant?: "default" | "yellow";
 }
 
-const { text, href, variant = 'default' } = Astro.props;
+const { text, href, variant = "default" } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
-const jobsHref = href || getLocalizedUrl('bei-uns-arbeiten/', lang);
+const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
 ---
 
-<a href={jobsHref} class:list={['topticker', { yellow: variant === 'yellow' }]}>
+<a href={jobsHref} class:list={["topticker", { yellow: variant === "yellow" }]}>
   <div class="ticker">
-    {Array(7).fill(null).map(() => (
-      <span set:html={text} />
-    ))}
+    {
+      Array(7)
+        .fill(null)
+        .map(() => <span set:html={text} />)
+    }
   </div>
 </a>
 
