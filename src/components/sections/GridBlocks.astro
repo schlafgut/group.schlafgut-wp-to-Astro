@@ -1,98 +1,14 @@
 ---
 interface Props {
-  variant?: 'boxed' | 'fullwidth';
+  variant?: "boxed" | "fullwidth";
   class?: string;
 }
 
-const { variant = 'boxed', class: className = '' } = Astro.props;
+const { variant = "boxed", class: className = "" } = Astro.props;
 ---
 
-<section class:list={['section__grid-blocks', variant, 'default', className]}>
+<section class:list={["section__grid-blocks", variant, "default", className]}>
   <div class="innerwrapper smaller">
     <slot />
   </div>
 </section>
-
-<style>
-  .section__grid-blocks .innerwrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: calc(var(--gutterSpacing) + 0.5rem) var(--gutterSpacing);
-  }
-
-  @media (max-width: 768px) {
-    .section__grid-blocks .innerwrapper {
-      grid-template-columns: 100%;
-      gap: var(--gutterSpacing) 0;
-    }
-
-    .section__grid-blocks .innerwrapper.smaller {
-      width: calc(100% - var(--sideSpacing) - var(--sideSpacing));
-    }
-  }
-
-  .section__grid-blocks.boxed .innerwrapper {
-    max-width: 1630px;
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper {
-    max-width: none;
-    width: 100%;
-    gap: 0;
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper :global(.single__block) {
-    border-radius: 0;
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper :global(.single__block .content) {
-    margin-top: 8rem;
-  }
-
-  @media (max-width: 768px) {
-    .section__grid-blocks.fullwidth .innerwrapper :global(.single__block .content) {
-      margin-top: 3.1rem;
-    }
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide) {
-    height: 63.6rem;
-  }
-
-  @media (max-width: 768px) {
-    .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide) {
-      height: 35.4rem;
-    }
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide h3) {
-    max-width: 16em;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide[data-headline="plantin"] h3) {
-    font-size: var(--fontSize60);
-  }
-
-  @media (max-width: 768px) {
-    .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide[data-headline="plantin"] h3) {
-      font-size: var(--fontSize32);
-      max-width: 9em;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-
-  .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide[data-headline="agrandir_wide"] h3) {
-    font-size: var(--fontSize45);
-    margin-top: 1.4em;
-    max-width: 23em;
-  }
-
-  @media (max-width: 768px) {
-    .section__grid-blocks.fullwidth .innerwrapper :global(.single__block.wide[data-headline="agrandir_wide"] h3) {
-      font-size: var(--fontSize24);
-    }
-  }
-</style>

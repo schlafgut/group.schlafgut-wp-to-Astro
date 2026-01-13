@@ -6,16 +6,20 @@ interface Props {
   class?: string;
 }
 
-const { title, subtitle, taglines = [], class: className = '' } = Astro.props;
+const { title, subtitle, taglines = [], class: className = "" } = Astro.props;
 ---
 
-<section class:list={['section__hero-text-jobs', className]}>
+<section class:list={["section__hero-text-jobs", className]}>
   <div class="innerwrapper">
     <h1 set:html={title} />
-    {subtitle && <p><strong set:html={subtitle} /></p>}
-    {taglines.map((tagline) => (
-      <h4 set:html={tagline} />
-    ))}
+    {
+      subtitle && (
+        <p>
+          <strong set:html={subtitle} />
+        </p>
+      )
+    }
+    {taglines.map((tagline) => <h4 set:html={tagline} />)}
   </div>
 </section>
 

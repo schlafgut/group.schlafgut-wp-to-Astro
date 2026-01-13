@@ -1,236 +1,161 @@
 ---
-import Image from '../Image.astro';
+import Image from "../Image.astro";
 
 interface Props {
-  background?: 'white' | 'yellow';
+  background?: "white" | "yellow";
   noMargin?: boolean;
-  image?: {
-    src: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-    srcset?: string;
-  } | {
-    desktop: { src: string; alt?: string; width?: number; height?: number; srcset?: string };
-    mobile: { src: string; alt?: string; width?: number; height?: number };
-  };
+  image?:
+    | {
+        src: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+        srcset?: string;
+      }
+    | {
+        desktop: {
+          src: string;
+          alt?: string;
+          width?: number;
+          height?: number;
+          srcset?: string;
+        };
+        mobile: { src: string; alt?: string; width?: number; height?: number };
+      };
   video?: {
     desktop?: { src: string; width?: number; height?: number };
     mobile?: { src: string; width?: number; height?: number };
   };
-  description?: string | {
-    variant?: 'default' | 'alternative';
-    title?: string;
-    content: string;
-  };
+  description?:
+    | string
+    | {
+        variant?: "default" | "alternative";
+        title?: string;
+        content: string;
+      };
   class?: string;
 }
 
 const {
-  background = 'white',
+  background = "white",
   noMargin = false,
   image,
   video,
   description,
-  class: className = '',
+  class: className = "",
 } = Astro.props;
 ---
 
 <section
   class:list={[
-    'section__fullwidth-image',
-    noMargin ? 'no-margin' : 'default',
+    "section__fullwidth-image",
+    noMargin ? "no-margin" : "default",
     className,
   ]}
   data-background={background}
 >
   <div class="image">
     <div class="inner-image-holder">
-      {video ? (
-        <>
-          {video.desktop && (
-            <video
-              class="only__desktop lazy"
-              width={video.desktop.width}
-              height={video.desktop.height}
-              autoplay
-              loop
-              muted
-              playsinline
-              aria-label="Dekoratives Hintergrundvideo"
-            >
-              <source data-src={video.desktop.src} type="video/mp4" />
-            </video>
-          )}
-          {video.mobile && (
-            <video
-              class="only__mobile lazy"
-              width={video.mobile.width}
-              height={video.mobile.height}
-              autoplay
-              loop
-              muted
-              playsinline
-              aria-label="Dekoratives Hintergrundvideo"
-            >
-              <source data-src={video.mobile.src} type="video/mp4" />
-            </video>
-          )}
-        </>
-      ) : image ? (
-        'desktop' in image ? (
+      {
+        video ? (
           <>
-            <Image
-              src={image.desktop.src}
-              alt={image.desktop.alt || ''}
-              width={image.desktop.width}
-              height={image.desktop.height}
-              srcset={image.desktop.srcset}
-              class="only__desktop"
-            />
-            <Image
-              src={image.mobile.src}
-              alt={image.mobile.alt || ''}
-              width={image.mobile.width}
-              height={image.mobile.height}
-              class="only__mobile"
-            />
+            {video.desktop && (
+              <video
+                class="only__desktop lazy"
+                width={video.desktop.width}
+                height={video.desktop.height}
+                autoplay
+                loop
+                muted
+                playsinline
+                aria-label="Dekoratives Hintergrundvideo"
+              >
+                <source data-src={video.desktop.src} type="video/mp4" />
+              </video>
+            )}
+            {video.mobile && (
+              <video
+                class="only__mobile lazy"
+                width={video.mobile.width}
+                height={video.mobile.height}
+                autoplay
+                loop
+                muted
+                playsinline
+                aria-label="Dekoratives Hintergrundvideo"
+              >
+                <source data-src={video.mobile.src} type="video/mp4" />
+              </video>
+            )}
           </>
-        ) : (
-          <Image
-            src={image.src}
-            alt={image.alt || ''}
-            width={image.width}
-            height={image.height}
-            srcset={image.srcset}
-          />
-        )
-      ) : null}
+        ) : image ? (
+          "desktop" in image ? (
+            <>
+              <Image
+                src={image.desktop.src}
+                alt={image.desktop.alt || ""}
+                width={image.desktop.width}
+                height={image.desktop.height}
+                srcset={image.desktop.srcset}
+                class="only__desktop"
+              />
+              <Image
+                src={image.mobile.src}
+                alt={image.mobile.alt || ""}
+                width={image.mobile.width}
+                height={image.mobile.height}
+                class="only__mobile"
+              />
+            </>
+          ) : (
+            <Image
+              src={image.src}
+              alt={image.alt || ""}
+              width={image.width}
+              height={image.height}
+              srcset={image.srcset}
+            />
+          )
+        ) : null
+      }
     </div>
-    {description && (
-      typeof description === 'string' ? (
-        <div class="description">
-          <p set:html={description} />
-        </div>
-      ) : (
-        <div class="innerwrapper smaller">
-          <div class:list={['description', description.variant || 'default']}>
-            {description.title && <h4>{description.title}</h4>}
-            <Fragment set:html={description.content} />
+    {
+      description &&
+        (typeof description === "string" ? (
+          <div class="description">
+            <p set:html={description} />
           </div>
-        </div>
-      )
-    )}
+        ) : (
+          <div class="innerwrapper smaller">
+            <div class:list={["description", description.variant || "default"]}>
+              {description.title && <h4>{description.title}</h4>}
+              <Fragment set:html={description.content} />
+            </div>
+          </div>
+        ))
+    }
   </div>
 </section>
 
-<style>
-  .section__fullwidth-image {
-    font-size: 0;
-    line-height: 0;
-    display: grid;
-    grid-template-columns: 100%;
-  }
-
-  .section__fullwidth-image[data-background="yellow"] {
-    background-color: var(--colorYellow);
-    padding-bottom: 4.3rem;
-  }
-
-  .section__fullwidth-image[data-background="yellow"] .image .description p {
-    max-width: none;
-  }
-
-  .section__fullwidth-image .image .inner-image-holder {
-    width: 100%;
-    position: relative;
-  }
-
-  .section__fullwidth-image .image .inner-image-holder :global(img),
-  .section__fullwidth-image .image .inner-image-holder :global(video) {
-    width: 100%;
-    height: auto;
-  }
-
-  .section__fullwidth-image .image .description {
-    font-size: var(--fontSize12);
-    line-height: 1.5;
-    letter-spacing: 0.21em;
-    text-align: left;
-    text-transform: uppercase;
-    padding: 1.1rem 1.7rem 0 1.7rem;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .section__fullwidth-image .image .description {
-      font-size: var(--fontSize9);
-      line-height: 1.555;
-      padding: 0.7rem 1rem 0 1rem;
-    }
-  }
-
-  .section__fullwidth-image .image .description p {
-    max-width: 47em;
-    margin: 0;
-  }
-
-  .section__fullwidth-image .image .description.alternative {
-    font-size: var(--fontSize24);
-    font-family: "PlantinMTPro", serif;
-    font-weight: 300;
-    line-height: 1.25;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    padding: 3.2rem 0 0 0;
-    max-width: 36em;
-  }
-
-  @media (max-width: 768px) {
-    .section__fullwidth-image .image .description.alternative {
-      font-size: var(--fontSize17);
-      line-height: 1.44;
-      padding-top: 1.7rem;
-    }
-  }
-
-  .section__fullwidth-image .image .description.alternative h4 {
-    font-family: "AgrandirWide", sans-serif;
-    font-size: var(--fontSize18);
-    font-weight: 900;
-    line-height: 1.333;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 0.8rem 0;
-  }
-
-  @media (max-width: 768px) {
-    .section__fullwidth-image .image .description.alternative h4 {
-      font-size: var(--fontSize14);
-    }
-  }
-
-  .section__fullwidth-image .image .description.alternative :global(p) {
-    max-width: none;
-    margin: 0;
-  }
-</style>
-
 <script>
   // Lazy load videos
-  const lazyVideos = document.querySelectorAll('.section__fullwidth-image video.lazy');
+  const lazyVideos = document.querySelectorAll(
+    ".section__fullwidth-image video.lazy"
+  );
 
-  if ('IntersectionObserver' in window) {
+  if ("IntersectionObserver" in window) {
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const video = entry.target as HTMLVideoElement;
-          const source = video.querySelector('source[data-src]') as HTMLSourceElement;
+          const source = video.querySelector(
+            "source[data-src]"
+          ) as HTMLSourceElement;
 
           if (source && source.dataset.src) {
             source.src = source.dataset.src;
             video.load();
-            video.classList.remove('lazy');
+            video.classList.remove("lazy");
           }
 
           videoObserver.unobserve(video);

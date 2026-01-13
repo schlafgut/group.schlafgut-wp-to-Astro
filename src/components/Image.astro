@@ -10,7 +10,7 @@
  *
  * Target: Lighthouse Performance 95+
  */
-import { Image as AstroImage } from 'astro:assets';
+import { Image as AstroImage } from "astro:assets";
 
 interface Props {
   src: string;
@@ -20,25 +20,25 @@ interface Props {
   srcset?: string; // Legacy prop, ignored with optimization
   sizes?: string;
   class?: string;
-  loading?: 'lazy' | 'eager';
+  loading?: "lazy" | "eager";
 }
 
 const {
   src,
-  alt = '',
+  alt = "",
   width,
   height,
-  class: className = '',
-  loading = 'lazy',
-  sizes = '(max-width: 768px) 100vw, 50vw',
+  class: className = "",
+  loading = "lazy",
+  sizes = "(max-width: 768px) 100vw, 50vw",
 } = Astro.props;
 
 // Extract filename from wp-content path
-const getFilename = (path: string): string => path.split('/').pop() || '';
+const getFilename = (path: string): string => path.split("/").pop() || "";
 
 // Import all images from assets folder at build time (lazy loaded)
 const allImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/images/*.{jpg,jpeg,png,gif,webp}'
+  "/src/assets/images/*.{jpg,jpeg,png,gif,webp}"
 );
 
 // Get the image module for this src
@@ -58,35 +58,30 @@ const finalWidth = width || imageData?.width;
 const finalHeight = height || imageData?.height;
 ---
 
-{imageData ? (
-  <AstroImage
-    src={imageData}
-    alt={alt}
-    width={finalWidth}
-    height={finalHeight}
-    class={className}
-    loading={loading}
-    decoding={loading === 'lazy' ? 'async' : 'sync'}
-    format="webp"
-    quality={80}
-    densities={[1, 2]}
-  />
-) : (
-  <img
-    src={src}
-    alt={alt}
-    width={finalWidth}
-    height={finalHeight}
-    class={className}
-    loading={loading}
-    decoding={loading === 'lazy' ? 'async' : 'sync'}
-    fetchpriority={loading === 'eager' ? 'high' : undefined}
-  />
-)}
-
-<style>
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-</style>
+{
+  imageData ? (
+    <AstroImage
+      src={imageData}
+      alt={alt}
+      width={finalWidth}
+      height={finalHeight}
+      class={className}
+      loading={loading}
+      decoding={loading === "lazy" ? "async" : "sync"}
+      format="webp"
+      quality={80}
+      densities={[1, 2]}
+    />
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      width={finalWidth}
+      height={finalHeight}
+      class={className}
+      loading={loading}
+      decoding={loading === "lazy" ? "async" : "sync"}
+      fetchpriority={loading === "eager" ? "high" : undefined}
+    />
+  )
+}

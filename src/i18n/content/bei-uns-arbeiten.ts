@@ -42,7 +42,7 @@ export const beiUnsArbeitenContent = {
       ],
     },
     quoteOnBackground: {
-      quote: '"einfach Gesunder Menschen&shy;verstand statt green&shy;washing"',
+      quote: '“einfach Gesunder Menschen&shy;verstand statt green&shy;washing“',
       author: {
         name: 'Max moedinger',
         title: 'Head of Business Development und Urenkel des Gründers von schlafgut',

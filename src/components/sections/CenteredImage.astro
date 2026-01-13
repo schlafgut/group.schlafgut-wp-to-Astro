@@ -1,5 +1,5 @@
 ---
-import Image from '../Image.astro';
+import Image from "../Image.astro";
 
 interface Props {
   image: {
@@ -13,69 +13,26 @@ interface Props {
   class?: string;
 }
 
-const { image, description, class: className = '' } = Astro.props;
+const { image, description, class: className = "" } = Astro.props;
 ---
 
-<section class:list={['section__centered-image', 'default', className]}>
+<section class:list={["section__centered-image", "default", className]}>
   <div class="innerwrapper">
     <div class="image">
       <Image
         src={image.src}
-        alt={image.alt || ''}
+        alt={image.alt || ""}
         width={image.width}
         height={image.height}
         srcset={image.srcset}
       />
-      {description && (
-        <div class="description">
-          <p set:html={description} />
-        </div>
-      )}
+      {
+        description && (
+          <div class="description">
+            <p set:html={description} />
+          </div>
+        )
+      }
     </div>
   </div>
 </section>
-
-<style>
-  .section__centered-image .innerwrapper .image {
-    width: 46rem;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 768px) {
-    .section__centered-image .innerwrapper .image {
-      width: calc(100% - 2.2rem);
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 1rem;
-      margin-bottom: 0;
-    }
-  }
-
-  .section__centered-image .innerwrapper .image :global(img) {
-    width: 100%;
-    height: auto;
-  }
-
-  .section__centered-image .innerwrapper .image .description {
-    font-size: var(--fontSize12);
-    line-height: 1.5;
-    letter-spacing: 0.21em;
-    text-align: left;
-    text-transform: uppercase;
-    padding: 1.1rem 0 0 0;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .section__centered-image .innerwrapper .image .description {
-      font-size: var(--fontSize9);
-      line-height: 1.55;
-      padding-top: 0.6rem;
-    }
-  }
-
-  .section__centered-image .innerwrapper .image .description p {
-    max-width: 47em;
-    margin: 0;
-  }
-</style>
