@@ -1,12 +1,13 @@
 ---
 interface Props {
   class?: string;
+  animate?: boolean;
 }
 
-const { class: className = "" } = Astro.props;
+const { class: className = "", animate = true } = Astro.props;
 ---
 
-<section class:list={["section__teaser-blocks", "default", className]}>
+<section class:list={["section__teaser-blocks", "default", className, { "stagger-container": animate }]}>
   <div class="innerwrapper">
     <slot />
   </div>
