@@ -541,6 +541,8 @@ body.frontend header .header__top .innerwrapper {
   body.frontend header .header__top .innerwrapper {
     grid-template-columns: auto 1fr auto;
     height: var(--headerHeight);
+    display: flex;
+    justify-content: space-between;
   }
 }
 .acfe-flexible-placeholder header .header__top .innerwrapper .burger,
@@ -870,6 +872,7 @@ body.frontend header .header__top .innerwrapper .logo {
     width: 8.2rem;
     margin-top: auto;
     margin-bottom: auto;
+    margin: 0;
   }
 }
 .acfe-flexible-placeholder header .header__top .innerwrapper .logo svg,
