@@ -7,6 +7,7 @@
  * - Responsive image generation (srcset)
  * - Native lazy loading (loading="lazy")
  * - CLS prevention via width/height attributes
+ * - Optional blur-to-sharp reveal animation
  *
  * Target: Lighthouse Performance 95+
  */
@@ -21,6 +22,8 @@ interface Props {
   sizes?: string;
   class?: string;
   loading?: "lazy" | "eager";
+  /** Enable blur-to-sharp reveal animation on scroll */
+  blur?: boolean;
 }
 
 const {
@@ -31,6 +34,7 @@ const {
   class: className = "",
   loading = "lazy",
   sizes = "(max-width: 768px) 100vw, 50vw",
+  blur = false,
 } = Astro.props;
 
 // Extract filename from wp-content path
@@ -71,6 +75,7 @@ const finalHeight = height || imageData?.height;
       format="webp"
       quality={80}
       densities={[1, 2]}
+      data-blur={blur ? "true" : undefined}
     />
   ) : (
     <img
@@ -82,6 +87,7 @@ const finalHeight = height || imageData?.height;
       loading={loading}
       decoding={loading === "lazy" ? "async" : "sync"}
       fetchpriority={loading === "eager" ? "high" : undefined}
+      data-blur={blur ? "true" : undefined}
     />
   )
 }

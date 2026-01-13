@@ -58,11 +58,40 @@ export function initStaggerAnimations(): void {
 }
 
 /**
+ * Initialize blur-to-sharp reveal animations for images with data-blur attribute
+ */
+export function initBlurAnimations(): void {
+  const images = document.querySelectorAll('[data-blur="true"]');
+
+  images.forEach((img) => {
+    // Set initial state
+    gsap.set(img, {
+      filter: 'blur(10px)',
+      opacity: 0.8,
+    });
+
+    // Animate to sharp on scroll
+    gsap.to(img, {
+      filter: 'blur(0px)',
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: img,
+        start: 'top 90%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+}
+
+/**
  * Initialize all scroll-based animations
  */
 export function initScrollAnimations(): void {
   initSlideInAnimations();
   initStaggerAnimations();
+  initBlurAnimations();
 }
 
 export { gsap, ScrollTrigger };
