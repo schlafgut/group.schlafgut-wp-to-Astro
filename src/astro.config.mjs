@@ -9,7 +9,9 @@ import netlify from "@astrojs/netlify";
 export default defineConfig({
   site: "https://schlafgroup.netlify.app",
   output: "server",
-  adapter: netlify(),
+  adapter: netlify({
+    imageCDN: false, // Disable Netlify Image CDN - serve images directly from _astro/
+  }),
   integrations: [
     react(),
     markdoc(),
