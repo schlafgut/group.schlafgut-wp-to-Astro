@@ -43,3 +43,19 @@ function isCurrentPage(href: string, current: string): boolean {
     </ul>
   </div>
 </nav>
+<script is:inline>
+  const burger = document.querySelector(".burger");
+  const navs = document.querySelectorAll("nav");
+
+  if (burger && navs.length) {
+    burger.addEventListener("click", () => {
+      // toggle navs
+      navs.forEach((nav) => {
+        nav.classList.toggle("is-active");
+      });
+
+      // toggle burger itself
+      burger.classList.toggle("is-active");
+    });
+  }
+</script>
