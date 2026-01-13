@@ -1,6 +1,12 @@
 ---
 import Image from "../Image.astro";
 
+interface VideoSource {
+  src: string;
+  width?: number;
+  height?: number;
+}
+
 interface Props {
   variant?: "default" | "wide";
   headline?: "agrandir_wide" | "plantin";
@@ -21,7 +27,9 @@ interface Props {
     srcset?: string;
   };
   video?: {
-    src: string;
+    desktop?: VideoSource;
+    mobile?: VideoSource;
+    src?: string;
     width?: number;
     height?: number;
   };
@@ -60,7 +68,34 @@ const {
   }
 
   {
-    video ? (
+    video?.desktop && video?.mobile ? (
+      <>
+        <video
+          class="background_image only__desktop lazy"
+          width={video.desktop.width}
+          height={video.desktop.height}
+          autoplay
+          loop
+          muted
+          playsinline
+          aria-label="Dekoratives Hintergrundvideo"
+        >
+          <source data-src={video.desktop.src} type="video/mp4" />
+        </video>
+        <video
+          class="background_image only__mobile lazy"
+          width={video.mobile.width}
+          height={video.mobile.height}
+          autoplay
+          loop
+          muted
+          playsinline
+          aria-label="Dekoratives Hintergrundvideo"
+        >
+          <source data-src={video.mobile.src} type="video/mp4" />
+        </video>
+      </>
+    ) : video?.src ? (
       <video
         class="background_image lazy"
         width={video.width}
