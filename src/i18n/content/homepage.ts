@@ -245,7 +245,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
     ],
     teasers: [
       {
-        href: '/jobs/',
+        href: '/aktuelle-stellen/',
         target: '_self',
         kicker: 'aktuelle stellenausschreibung',
         title: 'Hier bewerben!',
