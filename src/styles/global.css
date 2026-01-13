@@ -248,23 +248,19 @@ body.frontend {
   max-width: none !important;
 }
 
-.acfe-flexible-placeholder .only__desktop,
-body.frontend .only__desktop {
+.only__desktop {
   display: block;
 }
 @media (max-width: 768px) {
-  .acfe-flexible-placeholder .only__desktop,
-  body.frontend .only__desktop {
+  .only__desktop {
     display: none;
   }
 }
-.acfe-flexible-placeholder .only__mobile,
-body.frontend .only__mobile {
+.only__mobile {
   display: none;
 }
 @media (max-width: 768px) {
-  .acfe-flexible-placeholder .only__mobile,
-  body.frontend .only__mobile {
+  .only__mobile {
     display: block;
   }
 }
