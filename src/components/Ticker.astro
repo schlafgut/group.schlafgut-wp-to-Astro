@@ -14,11 +14,7 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
 
 <a href={jobsHref} class:list={["topticker", { yellow: variant === "yellow" }]}>
   <div class="ticker" id="ticker-content">
-    {
-      Array(7)
-        .fill(null)
-        .map(() => <span set:html={text} />)
-    }
+    <span class="ticker-item" set:html={text} />
   </div>
 </a>
 
@@ -29,25 +25,38 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
     const ticker = document.getElementById('ticker-content');
     if (!ticker) return;
 
-    const spans = ticker.querySelectorAll('span');
-    if (spans.length === 0) return;
+    const originalSpan = ticker.querySelector('.ticker-item');
+    if (!originalSpan) return;
 
-    // Calculate width of first half of spans (we duplicate content for seamless loop)
-    const halfCount = Math.floor(spans.length / 2);
-    let totalWidth = 0;
+    // Get viewport width and single item width
+    const viewportWidth = window.innerWidth;
+    const itemWidth = originalSpan.getBoundingClientRect().width;
 
-    for (let i = 0; i < halfCount; i++) {
-      totalWidth += spans[i].offsetWidth;
+    // Calculate how many copies we need to fill viewport + one extra set for seamless loop
+    const copiesNeeded = Math.ceil((viewportWidth * 2) / itemWidth) + 2;
+
+    // Clone the span enough times to fill the space
+    for (let i = 0; i < copiesNeeded; i++) {
+      const clone = originalSpan.cloneNode(true) as HTMLElement;
+      ticker.appendChild(clone);
     }
 
-    // Create seamless infinite loop
+    // Calculate total width of one "set" (half the content)
+    const allSpans = ticker.querySelectorAll('.ticker-item');
+    const halfCount = Math.floor(allSpans.length / 2);
+    let halfWidth = 0;
+    for (let i = 0; i < halfCount; i++) {
+      halfWidth += (allSpans[i] as HTMLElement).offsetWidth;
+    }
+
+    // Seamless infinite loop
     gsap.to(ticker, {
-      x: -totalWidth,
+      x: -halfWidth,
       duration: 30,
       ease: 'none',
       repeat: -1,
       modifiers: {
-        x: gsap.utils.unitize((x: string) => parseFloat(x) % totalWidth)
+        x: gsap.utils.unitize((x: string) => parseFloat(x) % halfWidth)
       }
     });
   }
@@ -70,6 +79,7 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
     z-index: 99999;
     display: block;
     text-decoration: none;
+    overflow: hidden;
   }
 
   .topticker.yellow {
@@ -84,8 +94,7 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
     position: relative;
     z-index: 9;
     height: var(--tickerHeight);
-    overflow: hidden;
-    width: 100%;
+    width: max-content;
     /* CSS animation removed - handled by GSAP */
   }
 

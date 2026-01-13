@@ -15,4 +15,11 @@ const jobs = defineCollection({
   }),
 });
 
-export const collections = { jobs };
+const settings = defineCollection({
+  type: 'data',
+  schema: z.object({
+    tickerText: z.string().default('Paid Social Marketer (m/w/d), Marktplatzmanager (m/w/d), Werkstudenten (m/w/d) <strong>join us!!!</strong>'),
+  }),
+});
+
+export const collections = { jobs, settings };
