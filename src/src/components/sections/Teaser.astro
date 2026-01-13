@@ -18,7 +18,7 @@ interface Props {
 const { href, target = "_self", kicker, title, image } = Astro.props;
 ---
 
-<a href={href} target={target} class="teaser">
+<a href={href} target={target} class="teaser slide-in-element">
   {
     image && (
       <div class="image">

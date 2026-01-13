@@ -1,14 +1,15 @@
 ---
 interface Props {
   class?: string;
+  animate?: boolean;
 }
 
-const { class: className = "" } = Astro.props;
+const { class: className = "", animate = true } = Astro.props;
 ---
 
 <section class:list={["section__text-centered", "default", className]}>
   <div class="innerwrapper smaller">
-    <div class="content">
+    <div class:list={["content", { "slide-in-element": animate }]}>
       <slot />
     </div>
   </div>

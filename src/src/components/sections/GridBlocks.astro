@@ -2,12 +2,13 @@
 interface Props {
   variant?: "boxed" | "fullwidth";
   class?: string;
+  animate?: boolean;
 }
 
-const { variant = "boxed", class: className = "" } = Astro.props;
+const { variant = "boxed", class: className = "", animate = true } = Astro.props;
 ---
 
-<section class:list={["section__grid-blocks", variant, "default", className]}>
+<section class:list={["section__grid-blocks", variant, "default", className, { "stagger-container": animate }]}>
   <div class="innerwrapper smaller">
     <slot />
   </div>
