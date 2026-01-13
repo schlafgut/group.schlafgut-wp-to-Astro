@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/components.css';
 import { getLangFromUrl, getHreflangs, getLangHtmlAttr } from '../i18n/utils';
+import { getEntry } from 'astro:content';
 import Ticker from '../components/Ticker.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -9,11 +10,14 @@ import Button from '../components/Button.astro';
 import AnimationLoader from '../components/AnimationLoader.astro';
 import { ui } from '../i18n/navigation';
 
+// Load ticker text from Keystatic settings
+const settingsEntry = await getEntry('settings', 'index');
+const tickerTextFromCMS = settingsEntry?.data?.tickerText || '';
+
 interface Props {
   title: string;
   description?: string;
   tickerText?: string;
-  tickerVariant?: 'default' | 'yellow';
   /** Yellow header background for job detail pages */
   headerVariant?: 'default' | 'yellow';
 }
@@ -21,8 +25,7 @@ interface Props {
 const {
   title,
   description = '',
-  tickerText = 'Paid Social Marketer (m/w/d), Marktplatzmanager (m/w/d), Werkstudenten (m/w/d) <strong>join us!!!</strong>',
-  tickerVariant = 'default',
+  tickerText = tickerTextFromCMS,
   headerVariant = 'default',
 } = Astro.props;
 
@@ -48,7 +51,7 @@ const t = ui[lang];
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class:list={["frontend", { "header-yellow": headerVariant === "yellow" }]}>
-    <Ticker text={tickerText} variant={headerVariant === "yellow" ? "yellow" : tickerVariant} />
+    {tickerText && <Ticker text={tickerText} variant="default" />}
     <Header currentPath={currentPath} />
 
     <div class="outerwrapper">

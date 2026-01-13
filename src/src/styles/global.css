@@ -1,28 +1,28 @@
 @font-face {
   font-family: "Agrandir";
-  src: url("../fonts/agrandir-regular.woff2") format("woff2"),
-    url("../fonts/agrandir-regular.woff") format("woff");
+  src: url("/fonts/agrandir-regular.woff2") format("woff2"),
+    url("/fonts/agrandir-regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: "Agrandir";
-  src: url("../fonts/agrandir-medium.woff2") format("woff2"),
-    url("../fonts/agrandir-medium.woff") format("woff");
+  src: url("/fonts/agrandir-medium.woff2") format("woff2"),
+    url("/fonts/agrandir-medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: "AgrandirWide";
-  src: url("../fonts/PPAgrandir-WideBlack.woff2") format("woff2"),
-    url("../fonts/PPAgrandir-WideBlack.woff") format("woff");
+  src: url("/fonts/PPAgrandir-WideBlack.woff2") format("woff2"),
+    url("/fonts/PPAgrandir-WideBlack.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
 @font-face {
-  font-family: "PlantinMTPRo";
-  src: url("../fonts/PlantinMTPro-Light.woff2") format("woff2"),
-    url("../fonts/PlantinMTPro-Light.woff") format("woff");
+  font-family: "PlantinMTPro";
+  src: url("/fonts/PlantinMTPro-Light.woff2") format("woff2"),
+    url("/fonts/PlantinMTPro-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
@@ -4561,4 +4561,10 @@ body.header-yellow header {
 }
 body.header-yellow .section__hero-text-jobs {
   background-color: var(--colorYellow);
+}
+/* Override mobile white header for yellow variant */
+@media only screen and (max-width: 768px) {
+  body.frontend.header-yellow header {
+    background-color: var(--colorYellow) !important;
+  }
 }

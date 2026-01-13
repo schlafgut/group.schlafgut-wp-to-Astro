@@ -1,4 +1,4 @@
-import { config, collection, fields } from '@keystatic/core';
+import { config, collection, singleton, fields } from '@keystatic/core';
 
 const isLocal = import.meta.env.DEV;
 
@@ -13,6 +13,19 @@ export default config({
     brand: {
       name: 'schlafgut CMS',
     },
+  },
+  singletons: {
+    settings: singleton({
+      label: 'Website Einstellungen',
+      path: 'src/content/settings/index',
+      schema: {
+        tickerText: fields.text({
+          label: 'Ticker Text',
+          description: 'Text der im Ticker oben auf der Seite läuft. HTML erlaubt (z.B. <strong>join us!</strong>)',
+          defaultValue: 'Paid Social Marketer (m/w/d), Marktplatzmanager (m/w/d), Werkstudenten (m/w/d) <strong>join us!!!</strong>',
+        }),
+      },
+    }),
   },
   collections: {
     jobs: collection({
