@@ -149,7 +149,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
             position: 'top',
             color: 'black',
             kicker: 'innovation aus tradition',
-            title: 'Wir haben das<br />Spannbettlaken<br />erfunden.',
+            title: 'Wir haben das <br /> Spannbettlaken <br /> erfunden.',
             link: { href: '/unsere-historie/', label: 'unsere geschichte' },
             video: {
               src: '/wp-content/uploads/2023/04/SCHG_WebsiteCorporate_Illustrationen_780x1000-1.mp4#t=0.001',
@@ -163,7 +163,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
             position: 'top',
             color: 'white',
             kicker: 'nachhaltig und fair',
-            title: '"Einfach gesunder<br />Menschenverstand<br />statt Greenwashing."',
+            title: '"Einfach gesunder <br /> Menschenverstand <br /> statt Greenwashing."',
             link: { href: '/was-uns-ausmacht/', label: 'mehr über uns' },
             image: {
               src: '/wp-content/uploads/2023/03/nachhaltig_fair-1680x2232.jpg',
@@ -179,7 +179,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
             position: 'middle',
             color: 'white',
             kicker: 'wir definieren<br />schlafkultur',
-            title: 'Sleeping Essentials<br />in bester Qualität.',
+            title: 'Sleeping Essentials <br /> in bester Qualität.',
             link: { href: '/produkte-entdecken/', label: 'entdecke unsere produktwelt' },
             image: {
               src: '/wp-content/uploads/2023/03/sleeping_essentials-1680x865.jpg',
@@ -200,7 +200,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
             position: 'middle',
             color: 'yellow',
             kicker: 'Join us!!!',
-            title: 'Werde teil unseres Teams<br />und definiere mit uns<br />Schlafkul­tur neu!',
+            title: 'Werde teil unseres Teams <br/> und definiere mit uns <br /> Schlafkul­tur neu!',
             link: { href: '/bei-uns-arbeiten/', label: 'Offene Stellen' },
             image: {
               src: '/wp-content/uploads/2023/03/join_us-1680x865.jpg',
@@ -216,7 +216,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
             position: 'top',
             color: 'white',
             kicker: 'zero-waste und Bio-Qualität',
-            title: 'nachhaltige<br />Produkte und<br />Verpackungen.',
+            title: 'nachhaltige <br /> Produkte und <br /> Verpackungen.',
             link: { href: '/unsere-produktion/', label: 'unsere Produktion' },
             video: {
               src: '/wp-content/uploads/2023/04/SCHG_WebsiteCorporate_ProduktionTeaser_780x1000.mp4#t=0.001',
@@ -230,7 +230,7 @@ export const homepageContent: Record<'de' | 'en' | 'nl', HomepageContent> = {
             position: 'top',
             color: 'black',
             kicker: 'people first',
-            title: 'Work-Life-Balance ist<br />bei uns keine Phrase',
+            title: 'Work-Life-Balance ist <br /> bei uns keine Phrase',
             link: { href: '/bei-uns-arbeiten/', label: 'schlafgut als Arbeitgeber' },
             image: {
               src: '/wp-content/uploads/2023/03/work_life-1680x2231.jpg',
