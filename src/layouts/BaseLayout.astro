@@ -6,6 +6,7 @@ import Ticker from '../components/Ticker.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
+import AnimationLoader from '../components/AnimationLoader.astro';
 import { ui } from '../i18n/navigation';
 
 interface Props {
@@ -56,5 +57,8 @@ const t = ui[lang];
     <Button href="https://www.schlafgut.com" target="_blank" variant="shop" class="only__mobile">
       {t.shopNow}
     </Button>
+
+    <!-- GSAP Animations - loads after page is idle -->
+    <AnimationLoader />
   </body>
 </html>

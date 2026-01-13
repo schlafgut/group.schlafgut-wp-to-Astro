@@ -1,0 +1,21 @@
+---
+/**
+ * AnimationLoader Component
+ *
+ * Single entry point for all GSAP animations.
+ * Uses client:idle to initialize animations after page load
+ * without blocking the main thread.
+ */
+---
+
+<script>
+  import { initScrollAnimations } from '../scripts/scroll-animations';
+
+  // Initialize animations when idle
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => initScrollAnimations());
+  } else {
+    // Fallback for Safari
+    setTimeout(() => initScrollAnimations(), 100);
+  }
+</script>
