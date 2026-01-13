@@ -13,7 +13,7 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
 ---
 
 <a href={jobsHref} class:list={["topticker", { yellow: variant === "yellow" }]}>
-  <div class="ticker">
+  <div class="ticker" id="ticker-content">
     {
       Array(7)
         .fill(null)
@@ -21,6 +21,44 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
     }
   </div>
 </a>
+
+<script>
+  import gsap from 'gsap';
+
+  function initTicker() {
+    const ticker = document.getElementById('ticker-content');
+    if (!ticker) return;
+
+    const spans = ticker.querySelectorAll('span');
+    if (spans.length === 0) return;
+
+    // Calculate width of first half of spans (we duplicate content for seamless loop)
+    const halfCount = Math.floor(spans.length / 2);
+    let totalWidth = 0;
+
+    for (let i = 0; i < halfCount; i++) {
+      totalWidth += spans[i].offsetWidth;
+    }
+
+    // Create seamless infinite loop
+    gsap.to(ticker, {
+      x: -totalWidth,
+      duration: 30,
+      ease: 'none',
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize((x: string) => parseFloat(x) % totalWidth)
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTicker);
+  } else {
+    initTicker();
+  }
+</script>
 
 <style>
   .topticker {
@@ -48,7 +86,7 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
     height: var(--tickerHeight);
     overflow: hidden;
     width: 100%;
-    animation: ticker 30s linear infinite;
+    /* CSS animation removed - handled by GSAP */
   }
 
   .ticker > :global(span) {
@@ -75,14 +113,5 @@ const jobsHref = href || getLocalizedUrl("bei-uns-arbeiten/", lang);
     font-weight: 900;
     font-family: "AgrandirWide", sans-serif;
     letter-spacing: 0.13em;
-  }
-
-  @keyframes ticker {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
   }
 </style>
