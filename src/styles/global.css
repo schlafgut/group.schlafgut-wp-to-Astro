@@ -4554,3 +4554,11 @@ body.frontend footer .innerwrapper .footer__bottom .tax-information {
     line-height: 1.3;
   }
 }
+
+/* Yellow header variant for job detail pages */
+body.header-yellow header {
+  background-color: var(--colorYellow);
+}
+body.header-yellow .section__hero-text-jobs {
+  background-color: var(--colorYellow);
+}

@@ -14,6 +14,8 @@ interface Props {
   description?: string;
   tickerText?: string;
   tickerVariant?: 'default' | 'yellow';
+  /** Yellow header background for job detail pages */
+  headerVariant?: 'default' | 'yellow';
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   description = '',
   tickerText = 'Paid Social Marketer (m/w/d), Marktplatzmanager (m/w/d), Werkstudenten (m/w/d) <strong>join us!!!</strong>',
   tickerVariant = 'default',
+  headerVariant = 'default',
 } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
@@ -44,8 +47,8 @@ const t = ui[lang];
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="frontend">
-    <Ticker text={tickerText} variant={tickerVariant} />
+  <body class:list={["frontend", { "header-yellow": headerVariant === "yellow" }]}>
+    <Ticker text={tickerText} variant={headerVariant === "yellow" ? "yellow" : tickerVariant} />
     <Header currentPath={currentPath} />
 
     <div class="outerwrapper">
