@@ -27,7 +27,7 @@ const content = unsereProduktionContent.de;
 >
   <HeroText>
     <h1 set:html={content.heroText.title} />
-    <p>{content.heroText.paragraph}</p>
+    <p set:html={content.heroText.paragraph} />
   </HeroText>
 
   <FullwidthImage video={content.fullwidthImages[0].video} />

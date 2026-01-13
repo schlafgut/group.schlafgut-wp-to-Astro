@@ -29,7 +29,7 @@ const content = homepageContent.de;
 
   {content.textCentered && content.textCentered[0] && (
     <TextCentered>
-      <p>{content.textCentered[0]}</p>
+      <p set:html={content.textCentered[0]} />
     </TextCentered>
   )}
 
@@ -53,7 +53,7 @@ const content = homepageContent.de;
 
   {content.textCentered && content.textCentered[1] && (
     <TextCentered>
-      <p>{content.textCentered[1]}</p>
+      <p set:html={content.textCentered[1]} />
     </TextCentered>
   )}
 
