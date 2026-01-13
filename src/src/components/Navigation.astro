@@ -1,6 +1,6 @@
 ---
-import { getLangFromUrl } from '../i18n/utils';
-import { navigation } from '../i18n/navigation';
+import { getLangFromUrl } from "../i18n/utils";
+import { navigation } from "../i18n/navigation";
 
 interface Props {
   currentPath: string;
@@ -12,8 +12,8 @@ const navItems = navigation[lang];
 
 function isCurrentPage(href: string, current: string): boolean {
   // Normalize paths
-  const normalizedHref = href.endsWith('/') ? href : href + '/';
-  const normalizedCurrent = current.endsWith('/') ? current : current + '/';
+  const normalizedHref = href.endsWith("/") ? href : href + "/";
+  const normalizedCurrent = current.endsWith("/") ? current : current + "/";
   return normalizedHref === normalizedCurrent;
 }
 ---
@@ -21,69 +21,25 @@ function isCurrentPage(href: string, current: string): boolean {
 <nav>
   <div class="innerwrapper smaller">
     <ul class="menu">
-      {navItems.map((item) => (
-        <li class:list={['menu-item', { 'current-menu-item': isCurrentPage(item.href, currentPath) }]}>
-          <a href={item.href} aria-current={isCurrentPage(item.href, currentPath) ? 'page' : undefined}>
-            {item.label}
-          </a>
-        </li>
-      ))}
+      {
+        navItems.map((item) => (
+          <li
+            class:list={[
+              "menu-item",
+              { "current-menu-item": isCurrentPage(item.href, currentPath) },
+            ]}
+          >
+            <a
+              href={item.href}
+              aria-current={
+                isCurrentPage(item.href, currentPath) ? "page" : undefined
+              }
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </nav>
-
-<style>
-  nav {
-    padding: 0;
-  }
-
-  .menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0 3em;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .menu-item {
-    margin: 0;
-    padding: 0;
-  }
-
-  .menu-item a {
-    font-size: var(--fontSize12);
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-    font-weight: 500;
-    color: var(--colorBlack);
-    text-decoration: none;
-    position: relative;
-    display: inline-block;
-    padding: 0.5em 0;
-  }
-
-  .menu-item a::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
-    background-color: var(--colorBlack);
-    transition: width 200ms ease-out;
-  }
-
-  .menu-item a:hover::after,
-  .menu-item.current-menu-item a::after {
-    width: 100%;
-  }
-
-  @media (max-width: 768px) {
-    nav {
-      display: none;
-    }
-  }
-</style>

@@ -1,7 +1,7 @@
 ---
-import Logo from './Logo.astro';
-import { getLangFromUrl } from '../i18n/utils';
-import { footerColumns, ui } from '../i18n/navigation';
+import Logo from "./Logo.astro";
+import { getLangFromUrl } from "../i18n/utils";
+import { footerColumns, ui } from "../i18n/navigation";
 
 const lang = getLangFromUrl(Astro.url);
 const columns = footerColumns[lang];
@@ -12,24 +12,26 @@ const t = ui[lang];
   <div class="innerwrapper smaller">
     <div class="footer__bottom">
       <div class="footer__columns">
-        {columns.map((column) => (
-          <div class="column">
-            <ul>
-              <li class="column-title">{column.title}</li>
-              {column.links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    target={link.external ? '_blank' : undefined}
-                    rel={link.external ? 'noopener noreferrer' : undefined}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {
+          columns.map((column) => (
+            <div class="column">
+              <ul>
+                <li class="column-title">{column.title}</li>
+                {column.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
 
         <div class="footer__logo">
           <Logo variant="heart" />
@@ -44,95 +46,3 @@ const t = ui[lang];
     </div>
   </div>
 </footer>
-
-<style>
-  footer {
-    padding: var(--sectionSpacing) 0;
-    background-color: var(--colorWhite);
-  }
-
-  .footer__bottom {
-    text-align: left;
-  }
-
-  .footer__columns {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) auto;
-    gap: var(--gutterSpacing);
-    margin-bottom: 3rem;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .footer__columns {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-    }
-  }
-
-  .column ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .column li {
-    margin: 0;
-    padding: 0;
-  }
-
-  .column .column-title {
-    font-size: var(--fontSize12);
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-    font-weight: 500;
-    color: var(--colorBlack);
-    margin-bottom: 1em;
-  }
-
-  .column a {
-    font-size: var(--fontSize14);
-    color: var(--colorBlack);
-    text-decoration: none;
-    display: block;
-    padding: 0.3em 0;
-    text-transform: lowercase;
-  }
-
-  .column a:hover {
-    color: var(--colorBlue);
-  }
-
-  .footer__logo {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .footer__logo {
-      grid-column: span 2;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-  }
-
-  .footer__logo :global(svg) {
-    width: 2.5rem;
-    height: auto;
-  }
-
-  .payment__logo-line {
-    margin-bottom: 1.5rem;
-  }
-
-  .payment__logo-line img {
-    max-width: 100%;
-    height: auto;
-    max-height: 2rem;
-  }
-
-  .tax-information {
-    font-size: var(--fontSize12);
-    color: var(--colorGrey);
-  }
-</style>

@@ -1,11 +1,11 @@
 ---
-import Logo from './Logo.astro';
-import Button from './Button.astro';
+import Logo from "./Logo.astro";
+import Button from "./Button.astro";
 // LanguageSwitcher deaktiviert - nur DE aktiv (2026-01-11)
 // import LanguageSwitcher from './LanguageSwitcher.astro';
-import Navigation from './Navigation.astro';
-import { getLangFromUrl } from '../i18n/utils';
-import { ui } from '../i18n/navigation';
+import Navigation from "./Navigation.astro";
+import { getLangFromUrl } from "../i18n/utils";
+import { ui } from "../i18n/navigation";
 
 interface Props {
   currentPath: string;
@@ -13,7 +13,7 @@ interface Props {
 
 const { currentPath } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
-const homeHref = lang === 'de' ? '/' : `/${lang}/`;
+const homeHref = lang === "de" ? "/" : `/${lang}/`;
 const t = ui[lang];
 ---
 
@@ -22,7 +22,11 @@ const t = ui[lang];
     <div class="innerwrapper smaller">
       <div class="header__left">
         {/* LanguageSwitcher deaktiviert - nur DE aktiv */}
-        <a href="https://business.schlafgut.com/account/login" target="_blank" class="b2b-link">
+        <a
+          href="https://business.schlafgut.com/account/login"
+          target="_blank"
+          class="b2b-link"
+        >
           {t.b2bShop}
         </a>
       </div>
@@ -40,11 +44,16 @@ const t = ui[lang];
       {/* LanguageSwitcher mobile deaktiviert - nur DE aktiv */}
 
       <button class="burger" aria-label="Menu" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          viewBox="0 0 30 30"
+        >
           <g fill="none" fill-rule="evenodd" stroke="#000">
-            <path class="top-stroke" d="M0 11.5h30"/>
-            <path class="middle-stroke" d="M0 15.003h30"/>
-            <path class="bottom-stroke" d="M0 18.507h30"/>
+            <path class="top-stroke" d="M0 11.5h30"></path>
+            <path class="middle-stroke" d="M0 15.003h30"></path>
+            <path class="bottom-stroke" d="M0 18.507h30"></path>
           </g>
         </svg>
       </button>
@@ -57,22 +66,11 @@ const t = ui[lang];
   <Navigation currentPath={currentPath} />
 </div>
 
-<style>
-  header {
-    height: var(--headerHeight);
-    position: relative;
-    z-index: 9999;
-  }
-
+<!-- <style>
   @media only screen and (max-width: 768px) {
     header {
       background-color: var(--colorWhite);
     }
-  }
-
-  .header__top {
-    padding-top: 2rem;
-    padding-bottom: 1rem;
   }
 
   @media only screen and (max-width: 768px) {
@@ -178,31 +176,49 @@ const t = ui[lang];
       display: none;
     }
   }
-</style>
+</style> -->
 
 <script>
   // Sticky navigation on scroll
-  const fixedNav = document.querySelector('.fixed__nav');
-  const header = document.querySelector('header');
+  const fixedNav = document.querySelector(".fixed__nav");
+  const header = document.querySelector("header");
 
-  if (fixedNav && header) {
-    const headerHeight = header.offsetHeight;
+  const mediaQueryMobile = window.matchMedia("(max-width: 1024px)");
 
-    window.addEventListener('scroll', () => {
+  let position = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    if (!mediaQueryMobile.matches) {
+      const header = document.querySelector("header");
+      if (!header) return;
+
+      const headerHeight = header.offsetHeight;
+
       if (window.scrollY > headerHeight) {
-        fixedNav.classList.add('visible');
+        const current = window.scrollY;
+        const fixedNav = document.querySelector(".fixed__nav");
+
+        if (!fixedNav) return;
+
+        if (current > position) {
+          fixedNav.classList.remove("show"); // scrolling down
+        } else {
+          fixedNav.classList.add("show"); // scrolling up
+        }
+
+        position = current;
       } else {
-        fixedNav.classList.remove('visible');
+        document.querySelector(".fixed__nav")?.classList.remove("show");
       }
-    });
-  }
+    }
+  });
 
   // Mobile menu toggle (placeholder - full implementation in Phase 4)
-  const burger = document.querySelector('.burger');
+  const burger = document.querySelector(".burger");
   if (burger) {
-    burger.addEventListener('click', () => {
+    burger.addEventListener("click", () => {
       // TODO: Implement mobile menu in optimization phase
-      console.log('Mobile menu toggled');
+      console.log("Mobile menu toggled");
     });
   }
 </script>

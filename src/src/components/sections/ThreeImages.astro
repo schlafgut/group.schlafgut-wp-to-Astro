@@ -1,5 +1,5 @@
 ---
-import Image from '../Image.astro';
+import Image from "../Image.astro";
 
 interface MediaItem {
   src: string;
@@ -17,114 +17,46 @@ interface MediaItem {
 
 interface Props {
   images: MediaItem[];
-  background?: 'default' | 'yellow';
+  background?: "default" | "yellow";
   class?: string;
 }
 
-const { images, background = 'default', class: className = '' } = Astro.props;
+const { images, background = "default", class: className = "" } = Astro.props;
 ---
 
 <section
-  class:list={['section__three-images', 'default', className]}
+  class:list={["section__three-images", "default", className]}
   data-background={background}
 >
-  {images.map((item) => (
-    <div class="slideInElement image">
-      {item.video ? (
-        <video
-          class="lazy"
-          width={item.video.width || 1080}
-          height={item.video.height || 1080}
-          autoplay
-          loop
-          muted
-          playsinline
-          aria-label="Dekoratives Video"
-        >
-          <source data-src={item.video.src} type="video/mp4" />
-        </video>
-      ) : (
-        <Image
-          src={item.src}
-          alt={item.alt || ''}
-          width={item.width}
-          height={item.height}
-          srcset={item.srcset}
-        />
-      )}
-      {item.description && (
-        <div class="description" set:html={item.description} />
-      )}
-    </div>
-  ))}
+  {
+    images.map((item) => (
+      <div class="slideInElement image">
+        {item.video ? (
+          <video
+            class="lazy"
+            width={item.video.width || 1080}
+            height={item.video.height || 1080}
+            autoplay
+            loop
+            muted
+            playsinline
+            aria-label="Dekoratives Video"
+          >
+            <source data-src={item.video.src} type="video/mp4" />
+          </video>
+        ) : (
+          <Image
+            src={item.src}
+            alt={item.alt || ""}
+            width={item.width}
+            height={item.height}
+            srcset={item.srcset}
+          />
+        )}
+        {item.description && (
+          <div class="description" set:html={item.description} />
+        )}
+      </div>
+    ))
+  }
 </section>
-
-<style>
-  .section__three-images {
-    font-size: 0;
-    line-height: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    .section__three-images {
-      grid-template-columns: 100%;
-      gap: 3.9rem 0;
-    }
-  }
-
-  .section__three-images[data-background="yellow"] {
-    background-color: var(--colorYellow);
-    padding-bottom: 4.3rem;
-  }
-
-  .section__three-images[data-background="yellow"] .image .description p {
-    max-width: none;
-  }
-
-  .section__three-images .image :global(img),
-  .section__three-images .image :global(video) {
-    object-fit: cover;
-    width: 100%;
-    height: auto;
-  }
-
-  .section__three-images .image .description :global(h3) {
-    font-family: var(--fontFamilyAgrandir);
-    font-size: var(--fontSize14);
-    font-weight: 500;
-    letter-spacing: 0.21em;
-    text-transform: uppercase;
-    margin: 0 0 0.5em 0;
-  }
-
-  .section__three-images .image .description {
-    font-size: var(--fontSize12);
-    line-height: 1.5;
-    letter-spacing: 0.21em;
-    text-align: left;
-    text-transform: uppercase;
-    padding: 1.1rem 1.7rem 0 1.7rem;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .section__three-images .image .description {
-      font-size: var(--fontSize9);
-      line-height: 1.555;
-      padding: 0.7rem 1rem 0 1rem;
-    }
-  }
-
-  .section__three-images .image .description :global(p) {
-    max-width: 39em;
-    margin: 0;
-  }
-
-  @media (max-width: 768px) {
-    .section__three-images .image .description :global(p) {
-      max-width: 35em;
-    }
-  }
-</style>
