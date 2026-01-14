@@ -71,7 +71,7 @@ export const footerColumns: Record<Lang, { title: string; links: { label: string
       links: [
         { label: 'Coloursystem', href: 'https://www.schlafgut.com/unsere-farben/', external: true },
         { label: 'Größentabelle', href: 'https://www.schlafgut.com/grossensystem/', external: true },
-        { label: 'Bettwäsche waschen', href: 'https://www.schlafgut.com/magazin/bettwaesche-waschen/', external: true },
+        { label: 'Bettwäsche waschen', href: 'https://www.schlafgut.com/magazin/bettlaken-waschen/', external: true },
       ],
     },
   ],
