@@ -85,13 +85,13 @@ if (job.data.requirements) {
 const yellowSections = [];
 
 if (job.data.benefits) {
+  const applySection = job.data.applyUrl
+    ? `<p style="margin-top: 2rem;"><a href="${job.data.applyUrl}" target="_blank" rel="noopener noreferrer" class="cta__button">Bewirb dich hier</a></p>`
+    : '';
+
   yellowSections.push({
     headline: 'Warum wir?',
-    content: textToHtml(job.data.benefits) + `
-      <p style="margin-top: 2rem;">Interesse? Dann bewirb Dich und sende deine Unterlagen an:<br />
-      <a href="mailto:${job.data.contactEmail}">${job.data.contactEmail}</a></p>
-      <p><a href="mailto:${job.data.contactEmail}" class="cta__button">jetzt bewerben</a></p>
-    `,
+    content: textToHtml(job.data.benefits) + applySection,
   });
 }
 

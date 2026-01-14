@@ -7,7 +7,7 @@ const jobs = defineCollection({
     gender: z.string().default('m/w/d'),
     employmentType: z.enum(['vollzeit', 'teilzeit', 'werkstudent', 'praktikum']).default('vollzeit'),
     location: z.string().default('Eislingen'),
-    contactEmail: z.string().email().default('bewerbung@schlafgut.com'),
+    applyUrl: z.string().url().optional(),
     published: z.boolean().default(true),
     tasks: z.string().optional(),
     requirements: z.string().optional(),

@@ -56,9 +56,9 @@ export default config({
           label: 'Standort',
           defaultValue: 'Eislingen'
         }),
-        contactEmail: fields.text({
-          label: 'Bewerbungs-Email',
-          defaultValue: 'bewerbung@schlafgut.com'
+        applyUrl: fields.url({
+          label: 'Bewerbungslink',
+          description: 'Link zum Bewerbungsformular (z.B. Factorial HR)',
         }),
         published: fields.checkbox({
           label: 'Veröffentlicht',
