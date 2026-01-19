@@ -7,7 +7,7 @@ import keystatic from "@keystatic/astro";
 import netlify from "@astrojs/netlify";
 
 export default defineConfig({
-  site: "https://schlafgroup.netlify.app",
+  site: "https://group.schlafgut.com",
   output: "server",
   adapter: netlify({
     imageCDN: false, // Disable Netlify Image CDN - serve images directly from _astro/
