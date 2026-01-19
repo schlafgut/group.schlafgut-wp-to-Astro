@@ -36,6 +36,39 @@ const employmentTypeLabels: Record<string, string> = {
   praktikum: 'Praktikum',
 };
 
+// Schema.org employment type mapping
+const schemaEmploymentType: Record<string, string> = {
+  vollzeit: 'FULL_TIME',
+  teilzeit: 'PART_TIME',
+  werkstudent: 'INTERN',
+  praktikum: 'INTERN',
+};
+
+// Build JobPosting structured data for Google Jobs
+const jobPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: `${job.data.title} ${job.data.gender}`,
+  description: [job.data.tasks, job.data.requirements, job.data.benefits].filter(Boolean).join('\n\n'),
+  datePosted: new Date().toISOString().split('T')[0], // Today as fallback
+  employmentType: schemaEmploymentType[job.data.employmentType] || 'FULL_TIME',
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: 'schlafgut',
+    sameAs: 'https://group.schlafgut.com',
+    logo: 'https://group.schlafgut.com/wp-content/themes/schlafgut/build/images/Schlafgut_Logo.png',
+  },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: job.data.location,
+      addressCountry: 'DE',
+    },
+  },
+  ...(job.data.applyUrl && { directApply: true }),
+};
+
 // Convert multiline text to HTML with list items
 function textToHtml(text: string | undefined): string {
   if (!text) return '';
@@ -125,6 +158,7 @@ const sharedFullBleedBlocks = [
   currentPath={Astro.url.pathname}
   headerVariant="yellow"
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jobPostingSchema)} />
   <HeroTextJobs
     title={`${job.data.title}<br />${job.data.gender}`}
     subtitle={`${employmentTypeLabels[job.data.employmentType]}, ${job.data.location}`}
