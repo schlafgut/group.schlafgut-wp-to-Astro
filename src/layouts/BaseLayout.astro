@@ -49,6 +49,9 @@ const t = ui[lang];
     ))}
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Slot for page-specific structured data (Schema.org) -->
+    <slot name="head" />
   </head>
   <body class:list={["frontend", { "header-yellow": headerVariant === "yellow" }]}>
     {tickerText && <Ticker text={tickerText} variant="default" />}

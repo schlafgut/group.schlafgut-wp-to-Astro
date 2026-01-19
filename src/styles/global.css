@@ -263,6 +263,15 @@ body.frontend {
   .only__mobile {
     display: block;
   }
+  /* Video elements need explicit positioning when shown on mobile */
+  video.only__mobile.background_image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 @-webkit-keyframes hide_show_underline {
   0% {
