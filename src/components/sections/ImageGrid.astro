@@ -29,7 +29,7 @@ const { items, class: className = "", animate = true } = Astro.props;
     <div class:list={["grid__holder", { "image-row-animate": animate }]}>
       {
         items.map((item) => (
-          <div class:list={[item.type, { image: item.type === "image" }]} style={`grid-area: ${item.area};`}>
+          <div class:list={[item.type, item.area, { image: item.type === "image" }]} style={`grid-area: ${item.area};`}>
             {item.type === "text" && item.content && (
               <p set:html={item.content} />
             )}
