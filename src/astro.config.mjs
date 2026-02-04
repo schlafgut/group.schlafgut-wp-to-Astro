@@ -4,13 +4,13 @@ import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
 // import tailwind from "@astrojs/tailwind";
 import keystatic from "@keystatic/astro";
-import netlify from "@astrojs/netlify";
+import cloudflare from "@astrojs/cloudflare";
 
 export default defineConfig({
   site: "https://group.schlafgut.com",
   output: "server",
-  adapter: netlify({
-    imageCDN: false, // Disable Netlify Image CDN - serve images directly from _astro/
+  adapter: cloudflare({
+    imageService: "passthrough", // Use Astro's built-in image optimization
   }),
   integrations: [
     react(),
