@@ -5,10 +5,7 @@ const isLocal = import.meta.env.DEV;
 export default config({
   storage: isLocal
     ? { kind: 'local' }
-    : {
-        kind: 'github',
-        repo: 'schlafgut/group.schlafgut-wp-to-Astro',
-      },
+    : { kind: 'cloud' },
   cloud: {
     project: 'schlafgut-group/group-schlafgut',
   },
